@@ -87,7 +87,6 @@ Class Azurin
 		}
 		
 		// Initialize controller
-		require_once SRCPATH.'Controllers/'.$this->controller.'.php';
 		$this->controller = 'Controllers\\'.$this->controller;
 		$this->controller = new $this->controller;
 		// Check method
