@@ -89,6 +89,7 @@ Class Azurin
 		// Initialize controller
 		$this->controller = 'Controllers\\'.$this->controller;
 		$this->controller = new $this->controller;
+		
 		// Check method
 		if(! empty($request[1]))
 		{
