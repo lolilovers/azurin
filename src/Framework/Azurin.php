@@ -38,7 +38,7 @@ Class Azurin
 		ini_set('ignore_repeated_errors', TRUE); 
 		ini_set('display_errors', ERR_DISPLAY); 
 		ini_set('log_errors', TRUE); 
-		ini_set('error_log', SRCPATH.'Storage/logs/errors.log');	
+		ini_set('error_log', SRCPATH.'Storage/log/errors.log');	
 	}
 	
 	// Request handler
@@ -80,7 +80,7 @@ Class Azurin
 			else
 			{
 				error_log('Controller or its method is not found: '.$request[0]);
-				require_once SRCPATH.'Views/errors/notfound.php';
+				require_once SRCPATH.'Views/errors/notfound.html';
 				return header($_SERVER["SERVER_PROTOCOL"]." 404");
 				die;
 			}
@@ -108,7 +108,7 @@ Class Azurin
 			else
 			{
 				error_log('Controller method is not found: '.$request[1]);
-				require_once SRCPATH.'Views/errors/notfound.php';
+				require_once SRCPATH.'Views/errors/notfound.html';
 				return header($_SERVER["SERVER_PROTOCOL"]." 404");
 				die;
 			}
