@@ -6,7 +6,7 @@
  * ===========================
  */
 
-namespace App\Framework;
+namespace Framework;
 
 class Controller
 {
@@ -14,7 +14,9 @@ class Controller
     protected $view;
     protected $view_data;
     protected $model;
-    // Renderer
+    protected $cache;
+    
+    // Renderer service
     public function view($view, $data = [])
     {
         if(! empty($data))
@@ -32,95 +34,80 @@ class Controller
         ob_end_clean();
         return $this->view;
     }
-    // Load other view
+    
+    // View extender
     public function merge($view)
     {
-        if(! empty($this->view_data))
-        {
-            if(is_array($this->view_data))
-            {
-                extract($this->view_data, EXTR_OVERWRITE);
-            }
-        }
-        ob_start();
-        require_once SRCPATH.'Views/'.$view.'.php';
-        $content = ob_get_contents();
-        ob_end_clean();
-        return $content;
+        return $this->view($view, $this->view_data);
     }
+    
     // Model
     public function model($model)
     {
-        require_once SRCPATH.'Models/'.$model.'.php';
-        $this->model = 'App\Models\\'.$model;
+        $this->model = 'Models\\'.$model;
         $this->model = new $this->model;
         return $this->model;
     }
+    
     // Redirect
     public function redirect($redirect)
     {
         return header('Location: '.URL.'/'.$redirect);
     }
-    // data binary encoded session
+    
+    // Session service
     public function session($type , $id = '', $data = '')
     {
+        // start the session
+        if(! $this->session_active)
+        {
+            ini_set('session.save_path', SRCPATH . '/Storage/session');
+            session_start();
+            $this->session_active = true;
+        }
+        // destroy
         if($type == 'destroy')
         {
-            // start the session
-            if(! $this->session_active)
-            {
-                session_start();
-                $this->session_active = true;
-            }
             // destroy session
             return session_destroy();
         }
+        // set
         else if($type == 'set')
         {
-            // start the session
-            if(! $this->session_active)
-            {
-                session_start();
-                $this->session_active = true;
-            }
-            // encode data
-            $id     = base64_encode($id);
-            $data   = base64_encode($data);
             // set data
             return $_SESSION[$id] = $data;
         }
+        // get
         else if($type == 'get')
         {
-            // start the session
-            if(! $this->session_active)
-            {
-                session_start();
-                $this->session_active = true;
-            }
-            // decode data
-            $id     = base64_encode($id);
             if(! empty($_SESSION[$id]))
             {
-                $data   = base64_decode($_SESSION[$id]);    
-                // send back to Controller::method
+                // get data
+                $data   = $_SESSION[$id];    
                 return $data;
             }
         }
     }
+    
     /**
-     * Cache function
+     * Cache service
      * 
-     * this: place begin of controller method
+     * start: place begin of controller method
      * end: place before end of controller method
      */
-    public function cache($type, $id, $expire = CACHE_DEFAULT_EXPIRE)
+    public function cache($type = 'end', $id = '', $expire = CACHE_DEFAULT_EXPIRE)
     {
 		// Cache name
-		$cache_name = CACHE_PREFIX."_".base64_encode($id);
+        if(! $id)
+        {
+            $id = $this->cache;
+        }
+        $this->cache = $id;
+		$cache_name = CACHE_PREFIX."_".md5($id);
 		// Cache file location
 		$cachefile  = SRCPATH."/Storage/cache/".$cache_name.".html";
 		// Before
-		if($type == 'this')
+		if($type == 'start')
 		{
 			if (file_exists($cachefile) && (time() - $expire < filemtime($cachefile)))
 			{

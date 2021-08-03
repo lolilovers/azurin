@@ -6,12 +6,12 @@
  * ===========================
  */
 
-namespace App\Framework;
+namespace Framework;
 
 // Version
-if(! defined('AZURIN_VER'))
+if(! defined('AZURIN_VERSION'))
 {
-	define('AZURIN_VER', '2.0.0');
+	define('AZURIN_VERSION', '2.0.1');
 }
 
 Class Azurin
@@ -19,18 +19,20 @@ Class Azurin
 	protected $controller	= DEFAULT_CONTROLLER;
 	protected $method		= DEFAULT_METHOD;
 	protected $args			= [];	
+	
 	// Start program
-	public function start()
+	public function listen()
 	{
 		// Logger
-		$this->loggerInterface();
+		$this->logger();
 		// Request
-		$request = $this->requestInterface();
+		$route = $this->requestInterface();
 		// Response
-		$this->responseInterface($request);
+		$this->responseInterface($route);
 	}
+	
 	// Logger
-	public function loggerInterface()
+	public function logger()
 	{
 		error_reporting(E_ALL); 
 		ini_set('ignore_repeated_errors', TRUE); 
@@ -38,10 +40,11 @@ Class Azurin
 		ini_set('log_errors', TRUE); 
 		ini_set('error_log', SRCPATH.'Storage/logs/errors.log');	
 	}
+	
 	// Request handler
 	public function requestInterface()
 	{
-		// HTTPS
+		// HTTPS Force
 		if(HTTPS_FORCE)
 		{
 			if($_SERVER["HTTPS"] != "on") 
@@ -50,7 +53,8 @@ Class Azurin
 				exit();
 			}
 		}
-		// URL
+		
+		// Magic router
 		if(isset($_GET['request']))
 		{
 			$request	= $_GET['request'];
@@ -59,6 +63,7 @@ Class Azurin
 			return $request;
 		}
 	}
+	
 	// Response handler
 	public function responseInterface($request)
 	{
@@ -80,9 +85,10 @@ Class Azurin
 				die;
 			}
 		}
+		
 		// Initialize controller
 		require_once SRCPATH.'Controllers/'.$this->controller.'.php';
-		$this->controller = 'App\Controllers\\'.$this->controller;
+		$this->controller = 'Controllers\\'.$this->controller;
 		$this->controller = new $this->controller;
 		// Check method
 		if(! empty($request[1]))
@@ -107,6 +113,7 @@ Class Azurin
 				die;
 			}
 		}
+		
 		// Call the method & send arguments
 		call_user_func_array([$this->controller, $this->method], $this->args);
 	}

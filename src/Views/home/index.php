@@ -7,7 +7,7 @@
     <title>Azurin</title>
 </head>
 <body>
-    <h2>Azurin v<?= AZURIN_VER ?></h2>
+    <h2>Azurin v<?= AZURIN_VERSION ?></h2>
     <p>PHP Micro Framework</p>
     <hr>
 </body>

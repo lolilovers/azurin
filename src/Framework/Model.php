@@ -6,12 +6,13 @@
  * ===========================
  */
 
-namespace App\Framework;
+namespace Framework;
 
-use App\Framework\Database;
+use Framework\Database;
 
 class Model 
 {
+    // Query service
     public function query($query)
     {
         $db = new Database;
