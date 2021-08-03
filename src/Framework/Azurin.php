@@ -11,7 +11,7 @@ namespace Framework;
 // Version
 if(! defined('AZURIN_VERSION'))
 {
-	define('AZURIN_VERSION', '2.0.1');
+	define('AZURIN_VERSION', '2.1');
 }
 
 Class Azurin
