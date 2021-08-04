@@ -125,4 +125,29 @@ class Controller
 			ob_end_flush();
 		}
     }
+
+    // Form action service
+    public function get($var)
+    {
+        if (! empty($_GET[$var]) && ! empty($_POST[$var]))
+        {
+            $var = [
+                'get'   => $_GET[$var],
+                'post'  => $_POST[$var]
+            ];
+        }
+        else if (! empty($_GET[$var]))
+        {
+            $var = $_GET[$var];
+        }
+        else if (! empty($_POST[$var]))
+        {
+            $var = $_POST[$var];
+        }
+        else
+        {
+            $var = null;
+        }
+        return $var;
+    }
 }

@@ -32,6 +32,6 @@ spl_autoload_register(function ($class) {
     require_once SRCPATH . $class . '.php';
 });
 
-// Start listen
+// Start app
 $app = new Framework\Azurin();
 $app->listen();

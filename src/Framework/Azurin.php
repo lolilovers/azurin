@@ -20,7 +20,7 @@ Class Azurin
 	protected $method		= DEFAULT_METHOD;
 	protected $args			= [];	
 	
-	// Start program
+	// Entry point
 	public function listen()
 	{
 		// Logger
@@ -55,9 +55,9 @@ Class Azurin
 		}
 		
 		// Magic router
-		if(isset($_GET['request']))
+		if(isset($_GET['uri']))
 		{
-			$request	= $_GET['request'];
+			$request	= $_GET['uri'];
 			$request	= filter_var($request, FILTER_SANITIZE_URL);
 			$request	= explode('/', $request);
 			return $request;
