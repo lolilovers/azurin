@@ -1,0 +1,24 @@
+{
+    "name": "azurin/azurin",
+    "description": "Azurin PHP micro framework",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Azurin\\Azurin\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "lolilovers",
+            "email": "cyntiadewioktavia@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require-dev": {
+        "kint-php/kint": "^3.3"
+    },
+    "require": {
+        "twig/twig": "^3.0",
+        "vlucas/phpdotenv": "^5.3"
+    }
+}

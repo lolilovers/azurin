@@ -8,6 +8,11 @@ class Home extends Controller
 {
     public function index()
     {
-        echo $this->view('home/index');
+        $data   = [
+            'name'      => 'Azurin',
+            'version'   => AZURIN_VERSION,
+            'desc'      => 'PHP Micro Framework'
+        ];
+        echo $this->view('home/index', $data);
     }
 }

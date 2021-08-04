@@ -6,7 +6,8 @@
 3. Deprecation for send_404 function
 4. Deprecation for console function
 5. Route definition feature removed, now use magic routing
-6. Autoload and config merged to initialize
-7. Added layout feature
+6. Updated autoloader
+7. Updated renderer service, now use twig template engine
 8. Changed log, session, and cache management
-9. Added form action service
+9. Added .env configuration support
+10. Added development mode

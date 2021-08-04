@@ -10,54 +10,70 @@ namespace Framework;
 
 class Controller
 {
-    private $session_active = false;
-    protected $view;
-    protected $view_data;
-    protected $model;
-    protected $cache;
-    
+    public function __construct(
+        private $session_active = false,
+        protected $view = '',
+        protected $view_data = [],
+        protected $model = '',
+        protected $cache = ''
+    ){}
+
     // Renderer service
     public function view($view, $data = [])
     {
+        // View path
+        $viewpath   = SRCPATH . 'Views';
+        $cachepath  = SRCPATH . 'Storage/cache/';
+
+        // Twig template engine
+        $loader = new \Twig\Loader\FilesystemLoader($viewpath);
+        $twig   = new \Twig\Environment($loader);
+
         // Save data
         if(! empty($data)) {
             if(is_array($data)) {
                 $this->view_data = $data;
                 unset($data);
-                extract($this->view_data, EXTR_OVERWRITE);
             }
         }
+        else {
+            $this->view_data = [];
+        }
+        
         // Render
         ob_start();
-        include SRCPATH.'Views/'.$view.'.php';
+        echo $twig->render($view . '.html', $this->view_data);
         $this->view = ob_get_contents();
         ob_end_clean();
-        // if cache enabled
+        
+        // When cache enabled
         if ($view == $this->cache) {
-            // cache file
+            // Cache file
             $cache_name     = CACHE_PREFIX."_".md5($view);
-		    $cachefile      = SRCPATH."/Storage/cache/".$cache_name.".html";
-            // save cache
+            $cachefile      = $cachepath.$cache_name.".html";
+            
+            // Save cache
             $create_cache = fopen($cachefile, 'w');
-			fwrite($create_cache, $this->view);
-			fclose($create_cache);
+            fwrite($create_cache, $this->view);
+            fclose($create_cache);
         }
-        // return output
+        
+        // Return output
         return $this->view;
     }
 
     // Cache service
-    public function cache($id = '', $expire = CACHE_DEFAULT_EXPIRE)
+    public function cache($cache = '', $expire = CACHE_DEFAULT_EXPIRE)
     {
         // Cache file
-        $this->cache    = $id;
-        $cache_name     = CACHE_PREFIX."_".md5($id);
+        $this->cache    = $cache;
+        $cache_name     = CACHE_PREFIX . '_' . md5($cache);
         $cachefile      = SRCPATH."/Storage/cache/".$cache_name.".html";
         // check cache
         if (file_exists($cachefile) && (time() - $expire < filemtime($cachefile))) {
             // load cache and stop execution
             require_once($cachefile);
-            exit;
+            exit();
         }
     }
 
@@ -78,7 +94,7 @@ class Controller
     // Redirect
     public function redirect($redirect)
     {
-        return header('Location: '.URL.'/'.$redirect);
+        return header('Location: ' . URL . $redirect);
     }
     
     // Session service
@@ -91,22 +107,18 @@ class Controller
             $this->session_active = true;
         }
         // destroy
-        if($type == 'destroy')
-        {
+        if($type == 'destroy') {
             // destroy session
             return session_destroy();
         }
         // set
-        else if($type == 'set')
-        {
+        else if($type == 'set') {
             // set data
             return $_SESSION[$id] = $data;
         }
         // get
-        else if($type == 'get')
-        {
-            if(! empty($_SESSION[$id]))
-            {
+        else if($type == 'get') {
+            if(! empty($_SESSION[$id])) {
                 // get data
                 $data   = $_SESSION[$id];    
                 return $data;
@@ -117,25 +129,26 @@ class Controller
     // Form action service
     public function get($var)
     {
-        if (! empty($_GET[$var]) && ! empty($_POST[$var]))
-        {
+        // GET & POST in same time
+        if (! empty($_GET[$var]) && ! empty($_POST[$var])) {
             $var = [
                 'get'   => $_GET[$var],
                 'post'  => $_POST[$var]
             ];
         }
-        else if (! empty($_GET[$var]))
-        {
+        // GET
+        else if (! empty($_GET[$var])) {
             $var = $_GET[$var];
         }
-        else if (! empty($_POST[$var]))
-        {
+        // POST
+        else if (! empty($_POST[$var])) {
             $var = $_POST[$var];
         }
-        else
-        {
+        // NULL
+        else {
             $var = null;
         }
+        // Return
         return $var;
     }
 }
