@@ -6,8 +6,8 @@
  * ===========================
  */
 
-// Path to src directory
-define('SRCPATH', __DIR__.'/../src/');
+// Path to root project directory
+define('ROOTPATH', __DIR__.'/..//');
 
 // Bootstrap the app
-require_once SRCPATH.'Framework/Initialize.php';
+require_once ROOTPATH . 'src/Framework/Initialize.php';

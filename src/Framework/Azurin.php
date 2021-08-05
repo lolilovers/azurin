@@ -6,7 +6,7 @@
  * ===========================
  */
 
-namespace Framework;
+namespace Src\Framework;
 
 // Version
 if(! defined('AZURIN_VERSION'))
@@ -34,19 +34,19 @@ Class Azurin
 	// Logger
 	public function logger()
 	{
+		$logFile = date('Y-m-d') . '.log';
 		error_reporting(E_ALL); 
 		ini_set('ignore_repeated_errors', TRUE); 
 		ini_set('display_errors', ERR_DISPLAY); 
 		ini_set('log_errors', TRUE); 
-		ini_set('error_log', SRCPATH.'Storage/log/errors.log');	
+		ini_set('error_log', SRCPATH . 'Storage/log/' . $logFile);	
 	}
 	
 	// Request handler
 	public function requestInterface()
 	{
 		// HTTPS Force
-		if(HTTPS_FORCE)
-		{
+		if(HTTPS_FORCE) {
 			if(empty($_SERVER["HTTPS"]) || $_SERVER["HTTPS"] != "on") {
 				header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
 				exit();
@@ -54,8 +54,7 @@ Class Azurin
 		}
 		
 		// Magic router
-		if(isset($_GET['uri']))
-		{
+		if(isset($_GET['uri'])) {
 			$request = $_GET['uri'];
 			$request = filter_var($request, FILTER_SANITIZE_URL);
 			$request = explode('/', $request);
@@ -83,7 +82,7 @@ Class Azurin
 		}
 		
 		// Initialize & run controller
-		$this->controller = 'Controllers\\'.$this->controller;
+		$this->controller = 'Src\Controllers\\'.$this->controller;
 		$this->controller = new $this->controller;
 		
 		// Check method

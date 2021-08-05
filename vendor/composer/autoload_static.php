@@ -7,9 +7,8 @@ namespace Composer\Autoload;
 class ComposerStaticInit650996329c29c2312fe49c4c5336c747
 {
     public static $files = array (
-        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-        'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
+        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '3917c79c5052b270641b5a200963dbc2' => __DIR__ . '/..' . '/kint-php/kint/init.php',
     );
 
@@ -20,25 +19,16 @@ class ComposerStaticInit650996329c29c2312fe49c4c5336c747
         ),
         'S' => 
         array (
-            'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
         ),
-        'P' => 
+        'M' => 
         array (
-            'PhpOption\\' => 10,
+            'M1\\Env\\' => 7,
         ),
         'K' => 
         array (
             'Kint\\' => 5,
-        ),
-        'G' => 
-        array (
-            'GrahamCampbell\\ResultType\\' => 26,
-        ),
-        'D' => 
-        array (
-            'Dotenv\\' => 7,
         ),
         'A' => 
         array (
@@ -51,10 +41,6 @@ class ComposerStaticInit650996329c29c2312fe49c4c5336c747
         array (
             0 => __DIR__ . '/..' . '/twig/twig/src',
         ),
-        'Symfony\\Polyfill\\Php80\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
-        ),
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
@@ -63,21 +49,13 @@ class ComposerStaticInit650996329c29c2312fe49c4c5336c747
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
-        'PhpOption\\' => 
+        'M1\\Env\\' => 
         array (
-            0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
+            0 => __DIR__ . '/..' . '/m1/env/src',
         ),
         'Kint\\' => 
         array (
             0 => __DIR__ . '/..' . '/kint-php/kint/src',
-        ),
-        'GrahamCampbell\\ResultType\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
-        ),
-        'Dotenv\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
         ),
         'Azurin\\Azurin\\' => 
         array (
@@ -85,12 +63,19 @@ class ComposerStaticInit650996329c29c2312fe49c4c5336c747
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'j' => 
+        array (
+            'josegonzalez\\Dotenv' => 
+            array (
+                0 => __DIR__ . '/..' . '/josegonzalez/dotenv/src',
+                1 => __DIR__ . '/..' . '/josegonzalez/dotenv/tests',
+            ),
+        ),
+    );
+
     public static $classMap = array (
-        'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
-        'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
-        'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -98,6 +83,7 @@ class ComposerStaticInit650996329c29c2312fe49c4c5336c747
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit650996329c29c2312fe49c4c5336c747::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit650996329c29c2312fe49c4c5336c747::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit650996329c29c2312fe49c4c5336c747::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit650996329c29c2312fe49c4c5336c747::$classMap;
 
         }, null, ClassLoader::class);

@@ -6,59 +6,66 @@
  * ===========================
  */
 
-namespace Framework;
+namespace Src\Framework;
 
 class Controller
 {
     public function __construct(
-        private $session_active = false,
+        private $sessionState = false,
         protected $view = '',
-        protected $view_data = [],
+        protected $viewData = [],
+        protected $viewEngine = true,
         protected $model = '',
         protected $cache = ''
     ){}
 
     // Renderer service
-    public function view($view, $data = [])
+    public function view($view, $data = [], $viewEngine = true)
     {
         // View path
-        $viewpath   = SRCPATH . 'Views';
-        $cachepath  = SRCPATH . 'Storage/cache/';
-
-        // Twig template engine
-        $loader = new \Twig\Loader\FilesystemLoader($viewpath);
-        $twig   = new \Twig\Environment($loader);
+        $viewPath   = SRCPATH . 'Views/';
+        $cachePath  = SRCPATH . 'Storage/cache/';
 
         // Save data
         if(! empty($data)) {
             if(is_array($data)) {
-                $this->view_data = $data;
+                $this->viewData = $data;
                 unset($data);
             }
         }
         else {
-            $this->view_data = [];
+            $this->viewData = [];
+        }
+        $this->viewEngine = $viewEngine;
+        unset($viewEngine);
+        
+        // Render with twig
+        if($this->viewEngine) {
+            $twigLoader = new \Twig\Loader\FilesystemLoader($viewPath);
+            $twig   = new \Twig\Environment($twigLoader);
+            ob_start();
+            echo $twig->render($view . '.html', $this->viewData);
+            $this->view = ob_get_contents();
+            ob_end_clean();
+        }
+        // Render without twig
+        else {
+            ob_start();
+            include $viewPath . $view . '.html';
+            $this->view = ob_get_contents();
+            ob_end_clean();
         }
         
-        // Render
-        ob_start();
-        echo $twig->render($view . '.html', $this->view_data);
-        $this->view = ob_get_contents();
-        ob_end_clean();
-        
-        // When cache enabled
+        // Save rendered view
         if ($view == $this->cache) {
-            // Cache file
-            $cache_name     = CACHE_PREFIX."_".md5($view);
-            $cachefile      = $cachepath.$cache_name.".html";
-            
-            // Save cache
-            $create_cache = fopen($cachefile, 'w');
-            fwrite($create_cache, $this->view);
-            fclose($create_cache);
+            $cacheName      = CACHE_PREFIX . '_' . md5($view) . '.html';
+            $cacheFile      = $cachePath . $cacheName;
+            $cacheFactory   = fopen($cacheFile, 'w');
+            fwrite($cacheFactory, $this->view);
+            fclose($cacheFactory);
         }
         
-        // Return output
+        // Return rendered view
         return $this->view;
     }
 
@@ -67,12 +74,12 @@ class Controller
     {
         // Cache file
         $this->cache    = $cache;
-        $cache_name     = CACHE_PREFIX . '_' . md5($cache);
-        $cachefile      = SRCPATH."/Storage/cache/".$cache_name.".html";
-        // check cache
-        if (file_exists($cachefile) && (time() - $expire < filemtime($cachefile))) {
-            // load cache and stop execution
-            require_once($cachefile);
+        $cacheName      = CACHE_PREFIX . '_' . md5($cache) . '.html';
+        $cachePath      = SRCPATH.'/Storage/cache/'.$cacheName;
+        // Check cache
+        if (file_exists($cachePath) && (time() - $expire < filemtime($cachePath))) {
+            // Load cache and stop execution
+            require_once($cachePath);
             exit();
         }
     }
@@ -80,14 +87,14 @@ class Controller
     // View extender
     public function merge($view)
     {
-        return $this->view($view, $this->view_data);
+        return $this->view($view, $this->viewData, $this->viewEngine);
     }
     
-    // Model
+    // Model loader
     public function model($model)
     {
-        $this->model = 'Models\\'.$model;
-        $this->model = new $this->model;
+        $model          = 'Src\Models\\'.$model;
+        $this->model    = new $model;
         return $this->model;
     }
     
@@ -100,26 +107,26 @@ class Controller
     // Session service
     public function session($type , $id = '', $data = '')
     {
-        // start the session
-        if(! $this->session_active) {
+        // Start the session
+        if(! $this->sessionState) {
             ini_set('session.save_path', SRCPATH . '/Storage/session');
             session_start();
-            $this->session_active = true;
+            $this->sessionState = true;
         }
-        // destroy
+        // Destroy
         if($type == 'destroy') {
-            // destroy session
+            // Destroy session
             return session_destroy();
         }
-        // set
+        // Set
         else if($type == 'set') {
-            // set data
+            // Set data
             return $_SESSION[$id] = $data;
         }
-        // get
+        // Get
         else if($type == 'get') {
             if(! empty($_SESSION[$id])) {
-                // get data
+                // Get data
                 $data   = $_SESSION[$id];    
                 return $data;
             }
@@ -150,5 +157,57 @@ class Controller
         }
         // Return
         return $var;
+    }
+
+    // Response JSON data
+    public function json($data = '')
+    {
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+
+    // Encryption service
+    public function encryption($type, $rawData)
+    {
+        // Key
+        $key = ENCRYPTION_KEY;
+
+        // Encrypt
+        if($type == 'encrypt') {
+            $plaintext = $rawData;
+            $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
+            $iv = openssl_random_pseudo_bytes($ivlen);
+            $ciphertext_raw = openssl_encrypt($plaintext, $cipher, $key, $options=OPENSSL_RAW_DATA, $iv);
+            $hmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary=true);
+            $ciphertext = base64_encode( $iv.$hmac.$ciphertext_raw );
+            // Encrypted data
+            $data = $ciphertext;
+        }
+
+        // Decrypt
+        else if ($type == 'decrypt') {
+            $c = base64_decode($rawData);
+            $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
+            $iv = substr($c, 0, $ivlen);
+            $hmac = substr($c, $ivlen, $sha2len=32);
+            $ciphertext_raw = substr($c, $ivlen+$sha2len);
+            $original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $key, $options=OPENSSL_RAW_DATA, $iv);
+            $calcmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary=true);
+            if (hash_equals($hmac, $calcmac)) {
+                // Match
+                $data = $original_plaintext;
+            }
+            else {
+                // Not match
+                $data = null;
+            }
+        }
+        else {
+            // Set null
+            $data = null;
+        }
+
+        // Return processed data
+        return $data;
     }
 }

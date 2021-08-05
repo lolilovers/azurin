@@ -6,14 +6,14 @@
  * ===========================
  */
 
-// Load .env file
-$dotenv = Dotenv\Dotenv::createImmutable(SRCPATH . '../');
-$dotenv->load();
+// Parse the .env file and send to the $_ENV variable
+$dotEnv = new josegonzalez\Dotenv\Loader(SRCPATH . '../.env');
+$dotEnv->parse();
+$dotEnv->toEnv();
 
 // App settings
 define('URL', $_ENV['URL']);
-$https = $_ENV['HTTPS_FORCE'] == 'true' ? true : false;
-define('HTTPS_FORCE', $https);
+define('HTTPS_FORCE', $_ENV['HTTPS_FORCE']);
 
 // Route settings
 define('DEFAULT_CONTROLLER', $_ENV['DEFAULT_CONTROLLER']);
@@ -27,10 +27,12 @@ define('DB_PASSWORD', $_ENV['DB_PASSWORD']);
 
 // Cache settings
 define('CACHE_PREFIX', $_ENV['CACHE_PREFIX']);
-$cacheexpire = (int)$_ENV['CACHE_DEFAULT_EXPIRE'];
+$cacheexpire = $_ENV['CACHE_DEFAULT_EXPIRE'];
 define('CACHE_DEFAULT_EXPIRE', $cacheexpire);
 
 // Development mode
-$dispe = $_ENV['DEV_MODE'] == 'true' ? true : false;
-Kint::$enabled_mode = $dispe;
-define('ERR_DISPLAY', $dispe);
+Kint::$enabled_mode = $_ENV['DEV_MODE'];
+define('ERR_DISPLAY', $_ENV['DEV_MODE']);
+
+// Encryption key
+define('ENCRYPTION_KEY', $_ENV['ENCRYPTION_KEY']);
