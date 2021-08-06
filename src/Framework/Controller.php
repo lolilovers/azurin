@@ -14,6 +14,7 @@ use Src\Framework\Services\Encryption;
 use Src\Framework\Services\Session;
 use Src\Framework\Services\Input;
 use Src\Framework\Services\NativeRenderer;
+use Src\Framework\Services\Cache;
 
 class Controller
 {
@@ -55,17 +56,14 @@ class Controller
         }
         // Render with native renderer
         else {
-            $native     = new NativeRenderer();
+            $native     = new NativeRenderer($this->render['viewPath']);
             $this->view = $native->render($this->render['view'], $this->render['data']);
         }
         
         // Save rendered view
         if ($this->render['view'] == $this->cache) {
-            $cacheName      = CACHE_PREFIX . '_' . md5($this->render['view']) . '.html';
-            $cacheFile      = $this->render['cachePath'] . $cacheName;
-            $cacheFactory   = fopen($cacheFile, 'w');
-            fwrite($cacheFactory, $this->view);
-            fclose($cacheFactory);
+            $cacheFactory = new Cache($this->render['cachePath']);
+            $cacheFactory->create($this->render['view'], $this->view);
         }
         
         // Return rendered view
@@ -73,19 +71,16 @@ class Controller
     }
 
     // Cache service
-    public function cache($cache = '', $expire = CACHE_DEFAULT_EXPIRE)
+    public function cache($cache, $expire = CACHE_DEFAULT_EXPIRE)
     {
         // Cache file
         $this->cache    = $cache;
-        $cacheName      = CACHE_PREFIX . '_' . md5($cache) . '.html';
-        $cachePath      = SRCPATH . '/Storage/cache/' . $cacheName;
-        // Check cache
-        if (file_exists($cachePath) && (time() - $expire < filemtime($cachePath))) {
-            // Load cache and stop execution
-            require_once($cachePath);
-            
-            exit();
-        }
+        $cachePath      = SRCPATH . 'Storage/cache/';
+        
+        // Load cache
+        $cacheLoader = new Cache($cachePath);
+
+        return $cacheLoader->load($cache, $expire);
     }
 
     // View extender
@@ -103,22 +98,10 @@ class Controller
         return $this->model;
     }
 
-    // Form action service
-    public function input()
-    {
-        return new Input();
-    }
-
     // Redirect
     public function redirect($redirect)
     {
         return header('Location: ' . URL . $redirect);
-    }
-
-    // Session service
-    public function session()
-    {
-        return new Session();
     }
 
     // Response JSON data
@@ -126,6 +109,18 @@ class Controller
     {
         header('Content-Type: application/json');
         echo json_encode($data);
+    }
+
+    // Form action service
+    public function input()
+    {
+        return new Input();
+    }
+
+    // Session service
+    public function session()
+    {
+        return new Session();
     }
 
     // Encryption service

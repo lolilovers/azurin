@@ -138,27 +138,24 @@ class MySQLiDriver
             $field = $field . ', ? ';
         }
         $query  = "INSERT INTO $this->table ( $column ) VALUES ( $field )";
-        $this->query($query, $value);
-
-        return $this->execute();
+        
+        return $this->query($query, $value);
     }
 
     // UPDATE
     public function update($column, $value, $key)
     {
         $query = "UPDATE $this->table SET $column = ? WHERE $this->primaryKey = ?";
-        $this->query($query, [ $value, $key ]);
-
-        return $this->execute();
+        
+        return $this->query($query, [ $value, $key ]);
     }
 
     // DELETE
     public function delete($value)
     {
         $query = "DELETE FROM $this->table WHERE $this->primaryKey = ?";
-        $this->query($query, [ $value ]);
-
-        return $this->execute();
+        
+        return $this->query($query, [ $value ]);
     }
 
     // COUNT

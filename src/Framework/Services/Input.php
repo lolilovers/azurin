@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * ===========================
+ * Input
+ * ===========================
+ */
+
 namespace Src\Framework\Services;
 
 class Input

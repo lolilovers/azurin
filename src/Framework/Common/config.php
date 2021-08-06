@@ -26,9 +26,7 @@ define('DB_USERNAME', $_ENV['DB_USERNAME']);
 define('DB_PASSWORD', $_ENV['DB_PASSWORD']);
 
 // Cache settings
-define('CACHE_PREFIX', $_ENV['CACHE_PREFIX']);
-$cacheexpire = $_ENV['CACHE_DEFAULT_EXPIRE'];
-define('CACHE_DEFAULT_EXPIRE', $cacheexpire);
+define('CACHE_DEFAULT_EXPIRE', $_ENV['CACHE_DEFAULT_EXPIRE']);
 
 // Development mode
 define('ERR_DISPLAY', $_ENV['DEV_MODE']);
@@ -38,10 +36,3 @@ define('ENCRYPTION_KEY', $_ENV['ENCRYPTION_KEY']);
 
 // Session path
 ini_set('session.save_path', SRCPATH . '/Storage/session');
-
-// Logger
-error_reporting(E_ALL);
-ini_set('ignore_repeated_errors', TRUE);
-ini_set('log_errors', TRUE);
-ini_set('error_log', SRCPATH . 'Storage/log/' . date('Y-m-d') . '.log');
-ini_set('display_errors', ERR_DISPLAY);

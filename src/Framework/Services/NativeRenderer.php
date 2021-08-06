@@ -1,15 +1,27 @@
 <?php
 
+/**
+ * ===========================
+ * Native Renderer
+ * ===========================
+ */
+
 namespace Src\Framework\Services;
 
 class NativeRenderer
 {
     protected $render = [];
 
+    public function __construct(
+        protected $viewPath,
+        protected $viewExtension = '.html'
+    ){}
+
     public function render($view, $data = [])
     {
         // Path
-        $this->render['viewPath']   = SRCPATH . 'Views/';
+        $this->render['viewPath']   = $this->viewPath;
+        $this->render['extension']  = $this->viewExtension;
         $this->render['view']       = $view;
 
         // Save data from request
@@ -28,7 +40,7 @@ class NativeRenderer
         
         // Render
         ob_start();
-        include $this->render['viewPath'] . $this->render['view'] . '.html';
+        include $this->render['viewPath'] . $this->render['view'] . $this->render['extension'];
         $this->render['output'] = ob_get_contents();
         ob_end_clean();
 
