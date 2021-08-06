@@ -7,7 +7,7 @@
  */
 
 // Parse the .env file and send to the $_ENV variable
-$dotEnv = new josegonzalez\Dotenv\Loader(SRCPATH . '../.env');
+$dotEnv = new Src\Framework\DotEnv\Loader(SRCPATH . '../.env');
 $dotEnv->parse();
 $dotEnv->toEnv();
 
@@ -31,8 +31,17 @@ $cacheexpire = $_ENV['CACHE_DEFAULT_EXPIRE'];
 define('CACHE_DEFAULT_EXPIRE', $cacheexpire);
 
 // Development mode
-Kint::$enabled_mode = $_ENV['DEV_MODE'];
 define('ERR_DISPLAY', $_ENV['DEV_MODE']);
 
 // Encryption key
 define('ENCRYPTION_KEY', $_ENV['ENCRYPTION_KEY']);
+
+// Session path
+ini_set('session.save_path', SRCPATH . '/Storage/session');
+
+// Logger
+error_reporting(E_ALL);
+ini_set('ignore_repeated_errors', TRUE);
+ini_set('log_errors', TRUE);
+ini_set('error_log', SRCPATH . 'Storage/log/' . date('Y-m-d') . '.log');
+ini_set('display_errors', ERR_DISPLAY);

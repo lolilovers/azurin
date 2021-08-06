@@ -13,4 +13,6 @@
 10. Added development mode
 11. Added template engine
 12. Added encryption service
-13. Added query builder
+13. Added query builder sevice
+14. Updated MySQLi query service
+15. Added simple X-CSRF prevention feature

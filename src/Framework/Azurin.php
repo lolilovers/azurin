@@ -23,27 +23,14 @@ Class Azurin
 	// Entry point
 	public function listen()
 	{
-		// Logger
-		$this->logger();
 		// Request
-		$route = $this->requestInterface();
+		$route = $this->requestHandler();
 		// Response
-		$this->responseInterface($route);
-	}
-	
-	// Logger
-	public function logger()
-	{
-		$logFile = date('Y-m-d') . '.log';
-		error_reporting(E_ALL); 
-		ini_set('ignore_repeated_errors', TRUE); 
-		ini_set('display_errors', ERR_DISPLAY); 
-		ini_set('log_errors', TRUE); 
-		ini_set('error_log', SRCPATH . 'Storage/log/' . $logFile);	
+		$this->responseHandler($route);
 	}
 	
 	// Request handler
-	public function requestInterface()
+	public function requestHandler()
 	{
 		// HTTPS Force
 		if(HTTPS_FORCE) {
@@ -63,7 +50,7 @@ Class Azurin
 	}
 	
 	// Response handler
-	public function responseInterface($request)
+	public function responseHandler($request)
 	{
 		// Check controller
 		if(! empty($request[0])) {

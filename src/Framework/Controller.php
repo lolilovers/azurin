@@ -8,10 +8,14 @@
 
 namespace Src\Framework;
 
+use Src\Framework\TemplateEngine\TemplateEngine;
+use Src\Framework\TemplateEngine\Loader\FilesystemLoader;
+use Src\Framework\Encryption;
+use Src\Framework\Session;
+
 class Controller
 {
     public function __construct(
-        private $sessionState = false,
         protected $view = '',
         protected $viewData = [],
         protected $viewEngine = true,
@@ -39,16 +43,19 @@ class Controller
         $this->viewEngine = $viewEngine;
         unset($viewEngine);
         
-        // Render with twig
+        // Render with template engine
         if($this->viewEngine) {
-            $twigLoader = new \Twig\Loader\FilesystemLoader($viewPath);
-            $twig   = new \Twig\Environment($twigLoader);
+            $TemplateEngineLoader   = new FilesystemLoader($viewPath);
+            $TemplateEngine         = new TemplateEngine([
+                "loader"            => $TemplateEngineLoader,
+                "partials_loader"   => $TemplateEngineLoader
+            ]);
             ob_start();
-            echo $twig->render($view . '.html', $this->viewData);
+            echo $TemplateEngine->render($view, $this->viewData);
             $this->view = ob_get_contents();
             ob_end_clean();
         }
-        // Render without twig
+        // Render without template engine
         else {
             ob_start();
             include $viewPath . $view . '.html';
@@ -97,41 +104,6 @@ class Controller
         $this->model    = new $model;
         return $this->model;
     }
-    
-    // Redirect
-    public function redirect($redirect)
-    {
-        return header('Location: ' . URL . $redirect);
-    }
-    
-    // Session service
-    public function session($type , $id = '', $data = '')
-    {
-        // Start the session
-        if(! $this->sessionState) {
-            ini_set('session.save_path', SRCPATH . '/Storage/session');
-            session_start();
-            $this->sessionState = true;
-        }
-        // Destroy
-        if($type == 'destroy') {
-            // Destroy session
-            return session_destroy();
-        }
-        // Set
-        else if($type == 'set') {
-            // Set data
-            return $_SESSION[$id] = $data;
-        }
-        // Get
-        else if($type == 'get') {
-            if(! empty($_SESSION[$id])) {
-                // Get data
-                $data   = $_SESSION[$id];    
-                return $data;
-            }
-        }
-    }
 
     // Form action service
     public function get($var)
@@ -159,6 +131,18 @@ class Controller
         return $var;
     }
 
+    // Redirect
+    public function redirect($redirect)
+    {
+        return header('Location: ' . URL . $redirect);
+    }
+
+    // Session service
+    public function session()
+    {
+        return new Session();
+    }
+
     // Response JSON data
     public function json($data = '')
     {
@@ -167,47 +151,10 @@ class Controller
     }
 
     // Encryption service
-    public function encryption($type, $rawData)
+    public function encryption()
     {
-        // Key
         $key = ENCRYPTION_KEY;
-
-        // Encrypt
-        if($type == 'encrypt') {
-            $plaintext = $rawData;
-            $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
-            $iv = openssl_random_pseudo_bytes($ivlen);
-            $ciphertext_raw = openssl_encrypt($plaintext, $cipher, $key, $options=OPENSSL_RAW_DATA, $iv);
-            $hmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary=true);
-            $ciphertext = base64_encode( $iv.$hmac.$ciphertext_raw );
-            // Encrypted data
-            $data = $ciphertext;
-        }
-
-        // Decrypt
-        else if ($type == 'decrypt') {
-            $c = base64_decode($rawData);
-            $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
-            $iv = substr($c, 0, $ivlen);
-            $hmac = substr($c, $ivlen, $sha2len=32);
-            $ciphertext_raw = substr($c, $ivlen+$sha2len);
-            $original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $key, $options=OPENSSL_RAW_DATA, $iv);
-            $calcmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary=true);
-            if (hash_equals($hmac, $calcmac)) {
-                // Match
-                $data = $original_plaintext;
-            }
-            else {
-                // Not match
-                $data = null;
-            }
-        }
-        else {
-            // Set null
-            $data = null;
-        }
-
-        // Return processed data
-        return $data;
+        $enc = new Encryption($key);
+        return $enc;
     }
 }
