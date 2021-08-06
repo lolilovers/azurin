@@ -72,7 +72,5 @@ class Parser
         } while ($tokens->valid());
 
         return $stack;
-
     }
-
 }

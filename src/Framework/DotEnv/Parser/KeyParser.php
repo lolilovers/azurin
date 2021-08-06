@@ -11,7 +11,7 @@ class KeyParser extends AbstractParser
      *
      * @param string $key The key string
      *
-     * @throws \M1\Env\Exception\ParseException If key contains a character that isn't alphanumeric or a _
+     * @throws Exception\ParseException If key contains a character that isn't alphanumeric or a _
      *
      * @return string|false The parsed key, or false if the key is a comment
      */

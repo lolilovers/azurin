@@ -36,12 +36,14 @@ class MySQLiDriver
     {
         // Non prepared query
         if ($value == null) {
+
             return $this->database->query($query);
         }
         // Prepared query
         else {
             $this->prepare($query);
             $this->bindParam($value);
+
             return $this->statement;
         }
     }
@@ -75,6 +77,7 @@ class MySQLiDriver
     public function result()
     {
         $this->execute();
+
         return $this->statement->get_result()->fetch_all();
     }
 
@@ -82,6 +85,7 @@ class MySQLiDriver
     public function resultAssoc()
     {
         $this->execute();
+
         return $this->statement->get_result()->fetch_assoc();
     }
 
@@ -89,6 +93,7 @@ class MySQLiDriver
     public function resultArray()
     {
         $this->execute();
+
         return $this->statement->get_result()->fetch_array();
     }
 
@@ -107,6 +112,7 @@ class MySQLiDriver
         else if (is_bool($value)) {
             $bind = 'b';
         }
+
         return $bind;
     }
 
@@ -116,12 +122,14 @@ class MySQLiDriver
         // Find all
         if(! $value) {
             $stmt = "SELECT * FROM $this->table";
+
             return $this->query($stmt)->fetch_all();
         }
         // Find where matching value of primary key
         else {
             $stmt  = "SELECT * FROM $this->table WHERE $this->primaryKey = ?";
             $this->query($stmt, [ $value ]);
+
             return $this->resultAssoc();
         }
     }
@@ -137,6 +145,7 @@ class MySQLiDriver
         }
         $query  = "INSERT INTO $this->table ( $column ) VALUES ( $field )";
         $this->query($query, $value);
+
         return $this->execute();
     }
 
@@ -144,7 +153,8 @@ class MySQLiDriver
     public function update($column, $value, $key)
     {
         $query = "UPDATE $this->table SET $column = ? WHERE $this->primaryKey = ?";
-        $this->query($query, [$value, $key]);
+        $this->query($query, [ $value, $key ]);
+
         return $this->execute();
     }
 
@@ -152,7 +162,8 @@ class MySQLiDriver
     public function delete($value)
     {
         $query = "DELETE FROM $this->table WHERE $this->primaryKey = ?";
-        $this->query($query, $value);
+        $this->query($query, [ $value ]);
+
         return $this->execute();
     }
 
@@ -160,7 +171,8 @@ class MySQLiDriver
     public function count($key)
     {
         $query = "SELECT COUNT( ? ) AS $key FROM $this->table";
-        $this->query($query, [$key]);
+        $this->query($query, [ $key ]);
+
         return $this->resultAssoc();
     }
 
@@ -168,7 +180,8 @@ class MySQLiDriver
     public function sum($key)
     {
         $query = "SELECT SUM( ? ) AS $key FROM $this->table";
-        $this->query($query, [$key]);
+        $this->query($query, [ $key ]);
+
         return $this->resultAssoc();
     }
 
@@ -176,7 +189,8 @@ class MySQLiDriver
     public function avg($key)
     {
         $query = "SELECT AVG( ? ) AS $key FROM $this->table";
-        $this->query($query, [$key]);
+        $this->query($query, [ $key ]);
+        
         return $this->resultAssoc();
     }
 }

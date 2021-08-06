@@ -333,5 +333,4 @@ class Tokenizer
     {
         return substr($text, $index, $tagLength) === $tag;
     }
-
 }

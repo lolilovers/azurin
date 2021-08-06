@@ -47,5 +47,4 @@ class TemplateString
     {
         $this->string = $string;
     }
-
 }

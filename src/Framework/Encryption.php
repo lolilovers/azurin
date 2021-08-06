@@ -25,6 +25,7 @@
         $ciphertext_raw = openssl_encrypt($plaintext, $cipher, $key, $options=OPENSSL_RAW_DATA, $iv);
         $hmac           = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary=true);
         $ciphertext     = base64_encode( $iv.$hmac.$ciphertext_raw );
+        
         // Encrypted data
         return $ciphertext;
     }
@@ -48,6 +49,7 @@
             // Not match
             $data = null;
         }
+
         // Decrypted data
         return $data;
     }

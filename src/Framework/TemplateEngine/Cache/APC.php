@@ -45,5 +45,4 @@ class APC implements Cache
     {
         apc_delete($name);
     }
-
 }

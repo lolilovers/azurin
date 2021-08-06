@@ -5,7 +5,6 @@ namespace Src\Framework\Database\Partial;
 
 use Src\Framework\Database\EngineInterface;
 use Src\Framework\Database\StatementInterface;
-
 use function Src\Framework\Database\alias;
 
 final class IdentifierQualified implements StatementInterface

@@ -7,14 +7,14 @@ abstract class AbstractParser
     /**
      * The parent parser
      *
-     * @var \M1\Env\Parser $parser
+     * @var Parser $parser
      */
     protected $parser;
 
     /**
      * The abstract parser constructor for Env
      *
-     * @param \M1\Env\Parser $parser The parent parser
+     * @param Parser $parser The parent parser
      */
     public function __construct($parser)
     {

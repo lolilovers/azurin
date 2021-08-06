@@ -24,6 +24,7 @@ class Session
         if(! empty($_SESSION[$id])) {
             $data = $_SESSION[$id];    
         }
+        
         return $data;
     }
 

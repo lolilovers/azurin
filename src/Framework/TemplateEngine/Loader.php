@@ -12,5 +12,4 @@ interface Loader
      * @return String
      */
     public function load($name);
-
 }

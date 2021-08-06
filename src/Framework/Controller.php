@@ -87,6 +87,7 @@ class Controller
         if (file_exists($cachePath) && (time() - $expire < filemtime($cachePath))) {
             // Load cache and stop execution
             require_once($cachePath);
+            
             exit();
         }
     }
@@ -102,6 +103,7 @@ class Controller
     {
         $model          = 'Src\Models\\'.$model;
         $this->model    = new $model;
+        
         return $this->model;
     }
 
@@ -127,6 +129,7 @@ class Controller
         else {
             $var = null;
         }
+        
         // Return
         return $var;
     }
@@ -155,6 +158,7 @@ class Controller
     {
         $key = ENCRYPTION_KEY;
         $enc = new Encryption($key);
+        
         return $enc;
     }
 }

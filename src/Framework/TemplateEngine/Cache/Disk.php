@@ -97,5 +97,4 @@ class Disk implements Cache
 
         unlink($path);
     }
-
 }

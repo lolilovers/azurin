@@ -29,6 +29,7 @@ class Model
             $this->table,
             $this->primaryKey
         );
+
         return $mysqli;
     }
 
@@ -36,6 +37,7 @@ class Model
     public function builder()
     {
         $factory = new QueryFactory(new MySqlEngine());
+        
         return $factory;
     }
 }

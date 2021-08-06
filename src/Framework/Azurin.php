@@ -11,7 +11,7 @@ namespace Src\Framework;
 // Version
 if(! defined('AZURIN_VERSION'))
 {
-	define('AZURIN_VERSION', '2.1');
+	define('AZURIN_VERSION', '2.2');
 }
 
 Class Azurin
@@ -36,6 +36,7 @@ Class Azurin
 		if(HTTPS_FORCE) {
 			if(empty($_SERVER["HTTPS"]) || $_SERVER["HTTPS"] != "on") {
 				header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+				
 				exit();
 			}
 		}
@@ -45,6 +46,7 @@ Class Azurin
 			$request = $_GET['uri'];
 			$request = filter_var($request, FILTER_SANITIZE_URL);
 			$request = explode('/', $request);
+			
 			return $request;
 		}
 	}
@@ -63,6 +65,7 @@ Class Azurin
 			else {
 				error_log('Controller or its method is not found: '.$request[0]);
 				require_once SRCPATH.'Views/errors/notfound.html';
+				
 				return header($_SERVER["SERVER_PROTOCOL"]." 404");
 				die;
 			}
@@ -87,6 +90,7 @@ Class Azurin
 			else {
 				error_log('Controller method is not found: '.$request[1]);
 				require_once SRCPATH.'Views/errors/notfound.html';
+				
 				return header($_SERVER["SERVER_PROTOCOL"]." 404");
 				die;
 			}

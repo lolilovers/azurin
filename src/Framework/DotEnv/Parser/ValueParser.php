@@ -49,14 +49,14 @@ class ValueParser extends AbstractParser
     /**
      * The parser for variables
      *
-     * @var \M1\Env\Parser\VariableParser $variable_parser
+     * @var Parser\VariableParser $variable_parser
      */
     private $variable_parser;
 
     /**
      * {@inheritdoc}
      *
-     * @param \M1\Env\Parser $parser The parent parser
+     * @param Parser $parser The parent parser
      * @param array $context Variables context
      */
     public function __construct($parser, array $context = array())
@@ -169,7 +169,7 @@ class ValueParser extends AbstractParser
      * @param string $value    The value to parse
      * @param string $symbol   The symbol we're parsing for
      *
-     * @throws \M1\Env\Exception\ParseException If the string has a missing end quote
+     * @throws Exception\ParseException If the string has a missing end quote
      *
      * @return string[] The matches based on the regex and the value
      */

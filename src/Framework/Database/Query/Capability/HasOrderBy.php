@@ -5,7 +5,6 @@ namespace Src\Framework\Database\Query\Capability;
 
 use Src\Framework\Database\ExpressionInterface;
 use Src\Framework\Database\StatementInterface;
-
 use function Src\Framework\Database\listing;
 use function Src\Framework\Database\order;
 

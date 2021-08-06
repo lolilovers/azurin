@@ -5,7 +5,6 @@ namespace Src\Framework\Database\Builder;
 
 use Src\Framework\Database\CriteriaInterface;
 use Src\Framework\Database\StatementInterface;
-
 use function Src\Framework\Database\criteria;
 use function Src\Framework\Database\listing;
 

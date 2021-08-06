@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Src\Framework\Database\Query;
 
 use Src\Framework\Database\ExpressionInterface;
-
 use function Src\Framework\Database\express;
 
 class DeleteQuery extends AbstractQuery

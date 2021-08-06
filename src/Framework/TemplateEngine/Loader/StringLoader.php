@@ -18,5 +18,4 @@ class StringLoader implements Loader
     {
         return new TemplateString($name);
     }
-
 }

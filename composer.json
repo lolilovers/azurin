@@ -1,0 +1,17 @@
+{
+    "name": "lolilovers/azurin",
+    "description": "PHP micro framework",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Lolilovers\\Azurin\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "lolilovers",
+            "email": "cyntiadewioktavia@gmail.com"
+        }
+    ],
+    "require": {}
+}

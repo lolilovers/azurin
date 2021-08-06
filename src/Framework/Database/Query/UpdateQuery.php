@@ -5,7 +5,6 @@ namespace Src\Framework\Database\Query;
 
 use Src\Framework\Database\ExpressionInterface;
 use Src\Framework\Database\StatementInterface;
-
 use function Src\Framework\Database\express;
 use function Src\Framework\Database\identify;
 use function Src\Framework\Database\listing;

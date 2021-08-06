@@ -5,7 +5,6 @@ namespace Src\Framework\TemplateEngine\Loader;
 use Src\Framework\TemplateEngine\Loader;
 use Src\Framework\TemplateEngine\TemplateString;
 
-
 class FilesystemLoader implements Loader
 {
     private $_baseDir;
@@ -128,5 +127,4 @@ class FilesystemLoader implements Loader
 
         return false;
     }
-
 }

@@ -5,7 +5,6 @@ namespace Src\Framework\Database\Query\SqlServer;
 
 use Src\Framework\Database\ExpressionInterface;
 use Src\Framework\Database\Query;
-
 use function Src\Framework\Database\literal;
 
 class SelectQuery extends Query\SelectQuery

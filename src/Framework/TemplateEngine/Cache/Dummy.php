@@ -47,5 +47,4 @@ class Dummy implements Cache
     {
         unset($this->cache[$name]);
     }
-
 }

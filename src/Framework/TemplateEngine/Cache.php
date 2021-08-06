@@ -31,5 +31,4 @@ interface Cache
      * @return void
      */
     public function remove($name);
-
 }

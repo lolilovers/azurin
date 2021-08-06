@@ -12,7 +12,7 @@ class Parser
     /**
      * The Env key parser
      *
-     * @var \M1\Env\Parser\KeyParser $key_parser
+     * @var Parser\KeyParser $key_parser
      */
     private $key_parser;
 
@@ -33,7 +33,7 @@ class Parser
     /**
      * The String helper class
      *
-     * @var \M1\Env\Helper\StringHelper $string_helper
+     * @var Helper\StringHelper $string_helper
      */
     public $string_helper;
 
@@ -41,7 +41,7 @@ class Parser
     /**
      * The Env value parser
      *
-     * @var \M1\Env\Parser\ValueParser $value_parser
+     * @var Parser\ValueParser $value_parser
      */
     public $value_parser;
 
@@ -110,7 +110,7 @@ class Parser
      *
      * @param array $raw_lines The raw content of the file
      *
-     * @throws \M1\Env\Exception\ParseException If the file does not have a key=value structure
+     * @throws Exception\ParseException If the file does not have a key=value structure
      *
      * @return array The .env contents
      */
@@ -161,7 +161,7 @@ class Parser
      *
      * @param string $raw_line The raw content of the line
      *
-     * @throws \M1\Env\Exception\ParseException If the file does not have a key=value structure
+     * @throws Exception\ParseException If the file does not have a key=value structure
      *
      * @return string The parsed line
      */
@@ -191,7 +191,7 @@ class Parser
      *
      * @param string $raw_line The raw content of the line
      *
-     * @throws \M1\Env\Exception\ParseException If the line does not have a key=value structure
+     * @throws Exception\ParseException If the line does not have a key=value structure
      *
      * @return array The parsed lines
      */

@@ -6,7 +6,6 @@ namespace Src\Framework\Database\Query;
 use Src\Framework\Database\EngineInterface;
 use Src\Framework\Database\ExpressionInterface;
 use Src\Framework\Database\StatementInterface;
-
 use function Src\Framework\Database\express;
 
 class UnionQuery extends AbstractQuery

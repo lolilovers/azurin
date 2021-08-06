@@ -168,4 +168,3 @@ class CSRF {
         $_SESSION['X-CSRF-TOKEN-LIST'] = null;
     }
 }
-

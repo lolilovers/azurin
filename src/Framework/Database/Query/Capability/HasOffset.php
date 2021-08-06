@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Src\Framework\Database\Query\Capability;
 
 use Src\Framework\Database\ExpressionInterface;
-
 use function Src\Framework\Database\literal;
 
 trait HasOffset
