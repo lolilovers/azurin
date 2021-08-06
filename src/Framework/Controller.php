@@ -17,8 +17,7 @@ class Controller
 {
     public function __construct(
         protected $view = '',
-        protected $viewData = [],
-        protected $viewEngine = true,
+        protected $render = [],
         protected $model = '',
         protected $cache = ''
     ){}
@@ -26,47 +25,47 @@ class Controller
     // Renderer service
     public function view($view, $data = [], $viewEngine = true)
     {
-        // View path
-        $viewPath   = SRCPATH . 'Views/';
-        $cachePath  = SRCPATH . 'Storage/cache/';
-
+        // View & cache path
+        $this->render['viewPath']   = SRCPATH . 'Views/';
+        $this->render['cachePath']  = SRCPATH . 'Storage/cache/';
+        
         // Save data
-        if(! empty($data)) {
-            if(is_array($data)) {
-                $this->viewData = $data;
-                unset($data);
-            }
+        if(! empty($data) && is_array($data)) {
+            $this->render['data']   = $data;
         }
-        else {
-            $this->viewData = [];
-        }
-        $this->viewEngine = $viewEngine;
+        $this->render['view']       = $view;
+        $this->render['viewEngine'] = $viewEngine;
+        unset($view);
+        unset($data);
         unset($viewEngine);
         
         // Render with template engine
-        if($this->viewEngine) {
-            $TemplateEngineLoader   = new FilesystemLoader($viewPath);
+        if($this->render['viewEngine']) {
+            $TemplateEngineLoader   = new FilesystemLoader($this->render['viewPath']);
             $TemplateEngine         = new TemplateEngine([
                 "loader"            => $TemplateEngineLoader,
                 "partials_loader"   => $TemplateEngineLoader
             ]);
             ob_start();
-            echo $TemplateEngine->render($view, $this->viewData);
+            echo $TemplateEngine->render($this->render['view'], $this->render['data']);
             $this->view = ob_get_contents();
             ob_end_clean();
         }
         // Render without template engine
         else {
+            if (! empty($this->render['data']) && is_array($this->render['data'])) {
+                extract($this->render['data'], EXTR_OVERWRITE);
+            }
             ob_start();
-            include $viewPath . $view . '.html';
+            include $this->render['viewPath'] . $this->render['view'] . '.html';
             $this->view = ob_get_contents();
             ob_end_clean();
         }
         
         // Save rendered view
-        if ($view == $this->cache) {
-            $cacheName      = CACHE_PREFIX . '_' . md5($view) . '.html';
-            $cacheFile      = $cachePath . $cacheName;
+        if ($this->render['view'] == $this->cache) {
+            $cacheName      = CACHE_PREFIX . '_' . md5($this->render['view']) . '.html';
+            $cacheFile      = $this->render['cachePath'] . $cacheName;
             $cacheFactory   = fopen($cacheFile, 'w');
             fwrite($cacheFactory, $this->view);
             fclose($cacheFactory);
@@ -95,7 +94,7 @@ class Controller
     // View extender
     public function merge($view)
     {
-        return $this->view($view, $this->viewData, $this->viewEngine);
+        return $this->view($view, $this->render['data'], $this->render['viewEngine']);
     }
     
     // Model loader
