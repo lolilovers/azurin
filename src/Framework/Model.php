@@ -8,7 +8,7 @@
 
 namespace Src\Framework;
 
-use Src\Framework\MySQLiDriver;
+use Src\Framework\Services\MySQLiDriver;
 use Src\Framework\Database\Engine\MySqlEngine;
 use Src\Framework\Database\QueryFactory;
 use function Src\Framework\Database\field;

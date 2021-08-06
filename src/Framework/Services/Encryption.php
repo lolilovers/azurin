@@ -6,7 +6,7 @@
  * ===========================
  */
 
- namespace Src\Framework;
+ namespace Src\Framework\Services;
 
  class Encryption
  {

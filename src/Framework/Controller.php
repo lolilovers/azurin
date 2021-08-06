@@ -10,8 +10,10 @@ namespace Src\Framework;
 
 use Src\Framework\TemplateEngine\TemplateEngine;
 use Src\Framework\TemplateEngine\Loader\FilesystemLoader;
-use Src\Framework\Encryption;
-use Src\Framework\Session;
+use Src\Framework\Services\Encryption;
+use Src\Framework\Services\Session;
+use Src\Framework\Services\Input;
+use Src\Framework\Services\NativeRenderer;
 
 class Controller
 {
@@ -33,6 +35,9 @@ class Controller
         if(! empty($data) && is_array($data)) {
             $this->render['data']   = $data;
         }
+        else {
+            $this->render['data']   = [];
+        }
         $this->render['view']       = $view;
         $this->render['viewEngine'] = $viewEngine;
         unset($view);
@@ -46,20 +51,12 @@ class Controller
                 "loader"            => $TemplateEngineLoader,
                 "partials_loader"   => $TemplateEngineLoader
             ]);
-            ob_start();
-            echo $TemplateEngine->render($this->render['view'], $this->render['data']);
-            $this->view = ob_get_contents();
-            ob_end_clean();
+            $this->view = $TemplateEngine->render($this->render['view'], $this->render['data']);
         }
-        // Render without template engine
+        // Render with native renderer
         else {
-            if (! empty($this->render['data']) && is_array($this->render['data'])) {
-                extract($this->render['data'], EXTR_OVERWRITE);
-            }
-            ob_start();
-            include $this->render['viewPath'] . $this->render['view'] . '.html';
-            $this->view = ob_get_contents();
-            ob_end_clean();
+            $native     = new NativeRenderer();
+            $this->view = $native->render($this->render['view'], $this->render['data']);
         }
         
         // Save rendered view
@@ -81,7 +78,7 @@ class Controller
         // Cache file
         $this->cache    = $cache;
         $cacheName      = CACHE_PREFIX . '_' . md5($cache) . '.html';
-        $cachePath      = SRCPATH.'/Storage/cache/'.$cacheName;
+        $cachePath      = SRCPATH . '/Storage/cache/' . $cacheName;
         // Check cache
         if (file_exists($cachePath) && (time() - $expire < filemtime($cachePath))) {
             // Load cache and stop execution
@@ -107,30 +104,9 @@ class Controller
     }
 
     // Form action service
-    public function get($var)
+    public function input()
     {
-        // GET & POST in same time
-        if (! empty($_GET[$var]) && ! empty($_POST[$var])) {
-            $var = [
-                'get'   => $_GET[$var],
-                'post'  => $_POST[$var]
-            ];
-        }
-        // GET
-        else if (! empty($_GET[$var])) {
-            $var = $_GET[$var];
-        }
-        // POST
-        else if (! empty($_POST[$var])) {
-            $var = $_POST[$var];
-        }
-        // NULL
-        else {
-            $var = null;
-        }
-        
-        // Return
-        return $var;
+        return new Input();
     }
 
     // Redirect

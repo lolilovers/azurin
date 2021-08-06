@@ -6,7 +6,7 @@
  * ===========================
  */
 
-namespace Src\Framework;
+namespace Src\Framework\Services;
 
 class MySQLiDriver
 {
@@ -44,7 +44,7 @@ class MySQLiDriver
             $this->prepare($query);
             $this->bindParam($value);
 
-            return $this->statement;
+            return $this->execute();
         }
     }
 
@@ -76,24 +76,18 @@ class MySQLiDriver
     // Get all result
     public function result()
     {
-        $this->execute();
-
         return $this->statement->get_result()->fetch_all();
     }
 
     // Get associative array
     public function resultAssoc()
     {
-        $this->execute();
-
         return $this->statement->get_result()->fetch_assoc();
     }
 
     // Get result array
     public function resultArray()
     {
-        $this->execute();
-
         return $this->statement->get_result()->fetch_array();
     }
 
@@ -189,6 +183,24 @@ class MySQLiDriver
     public function avg($key)
     {
         $query = "SELECT AVG( ? ) AS $key FROM $this->table";
+        $this->query($query, [ $key ]);
+        
+        return $this->resultAssoc();
+    }
+
+    // MIN
+    public function min($key)
+    {
+        $query = "SELECT MIN( ? ) AS $key FROM $this->table";
+        $this->query($query, [ $key ]);
+        
+        return $this->resultAssoc();
+    }
+
+    // MAX
+    public function max($key)
+    {
+        $query = "SELECT MAX( ? ) AS $key FROM $this->table";
         $this->query($query, [ $key ]);
         
         return $this->resultAssoc();
