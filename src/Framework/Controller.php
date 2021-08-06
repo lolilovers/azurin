@@ -23,7 +23,7 @@ class Controller
     ){}
 
     // Renderer service
-    public function view($view, $data = [], $viewEngine = true)
+    public function view($view, $data = [], $viewEngine = false)
     {
         // View & cache path
         $this->render['viewPath']   = SRCPATH . 'Views/';

@@ -13,6 +13,6 @@ class Home extends Controller
             'version'   => AZURIN_VERSION,
             'desc'      => 'PHP Micro Framework'
         ];
-        echo $this->view('home/index', $data);
+        echo $this->view('home/index', $data, true);
     }
 }
