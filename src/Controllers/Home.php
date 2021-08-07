@@ -3,6 +3,7 @@
 namespace Src\Controllers;
 
 use Src\Framework\Controller;
+use Src\Framework\CSRF\CSRF AS csrf;
 
 class Home extends Controller
 {
