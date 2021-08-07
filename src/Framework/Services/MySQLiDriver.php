@@ -10,22 +10,25 @@ namespace Src\Framework\Services;
 
 class MySQLiDriver
 {
-    protected $database;
+    protected $mysqli;
     protected $statement;
+    protected $prepared;
 
     // Database configuration
     public function __construct(
-        protected $hostname,
-        protected $username,
-        protected $password,
-        protected $dbselect
+        protected string $hostname,
+        protected string $username,
+        protected string $password,
+        protected string $database,
+        protected int $port
     ){
         // Create connection
-        $this->database = new \mysqli(
+        $this->mysqli = new \mysqli(
             $this->hostname,
             $this->username,
             $this->password,
-            $this->dbselect
+            $this->database,
+            $this->port
         );
     }
 
@@ -33,14 +36,18 @@ class MySQLiDriver
     public function query($query, $value = null)
     {
         // Sanitize query
-        $query  = $this->database->real_escape_string($query);
+        $query  = $this->mysqli->real_escape_string($query);
 
         // Non prepared query
-        if ($value == null) {
-            return $this->database->query($query);
+        if (empty($value)) {
+            $this->prepared     = false;
+            $this->statement    = $this->mysqli->query($query);
+
+            return $this->statement;
         }
         // Prepared query
         else {
+            $this->prepared = true;
             $this->prepare($query);
             $this->bindParam($value);
 
@@ -51,7 +58,7 @@ class MySQLiDriver
     // Prepare query
     public function prepare($query)
     {
-        $this->statement = $this->database->prepare($query);
+        $this->statement = $this->mysqli->prepare($query);
 
         return $this->statement;
     }
@@ -78,31 +85,59 @@ class MySQLiDriver
     // Close connection
     public function close()
     {
-        return $this->database->close();
+        return $this->mysqli->close();
     }
 
     // Get all result
     public function result()
     {
-        return $this->statement->get_result()->fetch_all();
+        if($this->prepared) {
+            $result = $this->statement->get_result()->fetch_all();
+        }
+        else {
+            $result = $this->statement->fetch_all();
+        }
+
+        return $result;
     }
 
     // Get associative array
     public function resultAssoc()
     {
-        return $this->statement->get_result()->fetch_assoc();
+        if($this->prepared) {
+            $result = $this->statement->get_result()->fetch_assoc();
+        }
+        else {
+            $result = $this->statement->fetch_assoc();
+        }
+
+        return $result;
     }
 
     // Get result array
     public function resultArray()
     {
-        return $this->statement->get_result()->fetch_array();
+        if($this->prepared) {
+            $result = $this->statement->get_result()->fetch_array();
+        }
+        else {
+            $result = $this->statement->fetch_array();
+        }
+
+        return $result;
     }
 
     // Get result row
     public function resultRow()
     {
-        return $this->statement->get_result()->fetch_row();
+        if($this->prepared) {
+            $result = $this->statement->get_result()->fetch_row();
+        }
+        else {
+            $result = $this->statement->fetch_row();
+        }
+
+        return $result;
     }
 
     // Bind param validator

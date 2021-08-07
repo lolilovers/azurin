@@ -11,12 +11,21 @@ namespace Src\Framework;
 use Src\Framework\Services\MySQLiDriver;
 use Src\Framework\Database\QueryFactory;
 use Src\Framework\Database\Engine\MySqlEngine;
-use Src\Framework\Database\Engine\BasicEngine;
-use Src\Framework\Database\Engine\CommonEngine;
-use Src\Framework\Database\Engine\PostgresEngine;
-use Src\Framework\Database\Engine\SqliteEngine;
-use Src\Framework\Database\Engine\SqlServerEngine;
 use function Src\Framework\Database\field;
+use function Src\Framework\Database\search;
+use function Src\Framework\Database\on;
+use function Src\Framework\Database\group;
+use function Src\Framework\Database\express;
+use function Src\Framework\Database\criteria;
+use function Src\Framework\Database\literal;
+use function Src\Framework\Database\alias;
+use function Src\Framework\Database\func;
+use function Src\Framework\Database\order;
+use function Src\Framework\Database\identify;
+use function Src\Framework\Database\identifyAll;
+use function Src\Framework\Database\param;
+use function Src\Framework\Database\paramAll;
+use function Src\Framework\Database\listing;
 
 class Model 
 {
@@ -27,39 +36,20 @@ class Model
     public function mysqli()
     {
         $mysqli = new MySQLiDriver(
-            DB_SERVER,
+            DB_HOST,
             DB_USERNAME,
             DB_PASSWORD,
-            DB_NAME
+            DB_NAME,
+            DB_PORT
         );
 
         return $mysqli;
     }
 
     // Create query builder
-    public function builder($engine = 'mysql')
+    public function builder()
     {
-        if($engine == 'mysql') {
-            $factory = new QueryFactory(new MySqlEngine());
-        }
-        else if($engine == 'basic') {
-            $factory = new QueryFactory(new BasicEngine());
-        }
-        else if($engine == 'common') {
-            $factory = new QueryFactory(new CommonEngine());
-        }
-        else if($engine == 'postgresql') {
-            $factory = new QueryFactory(new PostgresEngine());
-        }
-        else if($engine == 'sqlserver') {
-            $factory = new QueryFactory(new SqlServerEngine());
-        }
-        else if($engine == 'sqlite') {
-            $factory = new QueryFactory(new SqliteEngine());
-        }
-        else {
-            $factory = null;
-        }
+        $factory = new QueryFactory(new MySqlEngine());
 
         return $factory;
     }
@@ -69,97 +59,123 @@ class Model
     {
         // Find all
         if($value == null) {
-            $stmt   = "SELECT * FROM $this->table";
+            $query = $this->builder()
+            ->select()
+            ->from($this->table)
+            ->compile();
+            $select = $this->mysqli();
+            $select->query($query->sql());
             
-            return $this->mysqli()->query($stmt)->fetch_all();
+            return $select->result();
         }
         // Find where matching value of key
         else {
-            $stmt   = "SELECT * FROM $this->table WHERE $this->primaryKey = ?";
+            $query = $this->builder()
+            ->select()
+            ->from($this->table)
+            ->where(field($this->primaryKey)->eq($value))
+            ->compile();
             $select = $this->mysqli();
-            $select->query($stmt, [ $value ]);
+            $select->query($query->sql(), $query->params());
             
             return $select->result();
         }
     }
 
     // INSERT
-    public function insert($column, $value)
+    public function insert($data)
     {
-        $field  = ' ? ';
-        $count  = count($value);
-        for ($i=1;$i<$count;$i++)
-        {
-            $field = $field . ', ? ';
-        }
-        $query  = "INSERT INTO $this->table ( $column ) VALUES ( $field )";
+        $query = $this->builder()
+        ->insert($this->table, $data)
+        ->compile();
 
-        return $this->mysqli()->query($query, $value);
+        return $this->mysqli()->query($query->sql(), $query->params());
     }
 
     // UPDATE
-    public function update($column, $value, $keyValue)
+    public function update($data, $id)
     {
-        $query  = "UPDATE $this->table SET $column = ? WHERE $this->primaryKey = ?";
+        $query = $this->builder()
+        ->update($this->table, $data)
+        ->where(field($this->primaryKey)->eq($id))
+        ->compile();
 
-        return $this->mysqli()->query($query, [ $value, $keyValue ]);
+        return $this->mysqli()->query($query->sql(), $query->params());
     }
 
     // DELETE
-    public function delete($value)
+    public function delete($id)
     {
-        $query  = "DELETE FROM $this->table WHERE $this->primaryKey = ?";
+        $query  = $this->builder()
+        ->delete($this->table)
+        ->where(field($this->primaryKey)->eq($id))
+        ->compile();
         
-        return $this->mysqli()->query($query, [ $value ]);
+        return $this->mysqli()->query($query->sql(), $query->params());
     }
 
     // COUNT
     public function count($key)
     {
-        $query  = "SELECT COUNT( ? ) AS $key FROM $this->table";
-        $count  = $this->mysqli();
-        $count->query($query, [ $key ]);
+        $query  = $this->builder()
+        ->select(alias(func('COUNT', $key), $key))
+        ->from($this->table)
+        ->compile();
+        $result = $this->mysqli();
+        $result->query($query->sql());
 
-        return $count->resultAssoc();
+        return $result->resultAssoc();
     }
 
     // SUM
     public function sum($key)
     {
-        $query = "SELECT SUM( ? ) AS $key FROM $this->table";
-        $sum   = $this->mysqli();
-        $sum->query($query, [ $key ]);
+        $query  = $this->builder()
+        ->select(alias(func('SUM', $key), $key))
+        ->from($this->table)
+        ->compile();
+        $result = $this->mysqli();
+        $result->query($query->sql());
 
-        return $sum->resultAssoc();
+        return $result->resultAssoc();
     }
 
     // AVG
     public function avg($key)
     {
-        $query = "SELECT AVG( ? ) AS $key FROM $this->table";
-        $avg   = $this->mysqli();
-        $avg->query($query, [ $key ]);
-        
-        return $avg->resultAssoc();
+        $query  = $this->builder()
+        ->select(alias(func('AVG', $key), $key))
+        ->from($this->table)
+        ->compile();
+        $result = $this->mysqli();
+        $result->query($query->sql());
+
+        return $result->resultAssoc();
     }
 
     // MIN
     public function min($key)
     {
-        $query = "SELECT MIN( ? ) AS $key FROM $this->table";
-        $min   = $this->mysqli();
-        $min->query($query, [ $key ]);
-        
-        return $min->resultAssoc();
+        $query  = $this->builder()
+        ->select(alias(func('MIN', $key), $key))
+        ->from($this->table)
+        ->compile();
+        $result = $this->mysqli();
+        $result->query($query->sql());
+
+        return $result->resultAssoc();
     }
 
     // MAX
     public function max($key)
     {
-        $query = "SELECT MAX( ? ) AS $key FROM $this->table";
-        $max   = $this->mysqli();
-        $max->query($query, [ $key ]);
-        
-        return $max->resultAssoc();
+        $query  = $this->builder()
+        ->select(alias(func('MAX', $key), $key))
+        ->from($this->table)
+        ->compile();
+        $result = $this->mysqli();
+        $result->query($query->sql());
+
+        return $result->resultAssoc();
     }
 }
