@@ -59,4 +59,9 @@ class Input
 
         return $var;
     }
+
+    public function method()
+    {
+        return $_SERVER['REQUEST_METHOD'];
+    }
 }

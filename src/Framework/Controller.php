@@ -12,18 +12,18 @@ use Src\Framework\TemplateEngine\TemplateEngine;
 use Src\Framework\TemplateEngine\Loader\FilesystemLoader;
 use Src\Framework\Services\Encryption;
 use Src\Framework\Services\Session;
+use Src\Framework\Services\Cookie;
 use Src\Framework\Services\Input;
+use Src\Framework\Services\Output;
 use Src\Framework\Services\NativeRenderer;
 use Src\Framework\Services\Cache;
 
 class Controller
 {
-    public function __construct(
-        protected $view = '',
-        protected $render = [],
-        protected $model = '',
-        protected $cache = ''
-    ){}
+    protected $view = '';
+    protected $render = [];
+    protected $model = '';
+    protected $cache = '';
 
     // Renderer service
     public function view($view, $data = [], $viewEngine = false)
@@ -47,12 +47,12 @@ class Controller
         
         // Render with template engine
         if($this->render['viewEngine']) {
-            $TemplateEngineLoader   = new FilesystemLoader($this->render['viewPath']);
-            $TemplateEngine         = new TemplateEngine([
-                "loader"            => $TemplateEngineLoader,
-                "partials_loader"   => $TemplateEngineLoader
+            $templateEngineLoader   = new FilesystemLoader($this->render['viewPath']);
+            $template               = new TemplateEngine([
+                "loader"            => $templateEngineLoader,
+                "partials_loader"   => $templateEngineLoader
             ]);
-            $this->view = $TemplateEngine->render($this->render['view'], $this->render['data']);
+            $this->view = $template->render($this->render['view'], $this->render['data']);
         }
         // Render with native renderer
         else {
@@ -92,10 +92,9 @@ class Controller
     // Model loader
     public function model($model)
     {
-        $model          = 'Src\Models\\'.$model;
-        $this->model    = new $model;
+        $this->model  = 'Src\Models\\' . $model;
         
-        return $this->model;
+        return new $this->model;
     }
 
     // Redirect
@@ -104,17 +103,22 @@ class Controller
         return header('Location: ' . URL . $redirect);
     }
 
-    // Response JSON data
-    public function json($data = '')
+    // Output service
+    public function output()
     {
-        header('Content-Type: application/json');
-        echo json_encode($data);
+        return new Output();
     }
 
-    // Form action service
+    // Input service
     public function input()
     {
         return new Input();
+    }
+
+    // Cookie service
+    public function cookie($options = [])
+    {
+        return new Cookie($options);
     }
 
     // Session service
@@ -127,8 +131,7 @@ class Controller
     public function encryption()
     {
         $key = ENCRYPTION_KEY;
-        $enc = new Encryption($key);
         
-        return $enc;
+        return new Encryption($key);
     }
 }

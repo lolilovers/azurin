@@ -18,9 +18,7 @@ class MySQLiDriver
         protected $hostname,
         protected $username,
         protected $password,
-        protected $dbselect,
-        protected $table,
-        protected $primaryKey
+        protected $dbselect
     ){
         // Create connection
         $this->database = new \mysqli(
@@ -34,9 +32,11 @@ class MySQLiDriver
     // Query service
     public function query($query, $value = null)
     {
+        // Sanitize query
+        $query  = $this->database->real_escape_string($query);
+
         // Non prepared query
         if ($value == null) {
-
             return $this->database->query($query);
         }
         // Prepared query
@@ -51,7 +51,9 @@ class MySQLiDriver
     // Prepare query
     public function prepare($query)
     {
-        return $this->statement = $this->database->prepare($query);
+        $this->statement = $this->database->prepare($query);
+
+        return $this->statement;
     }
 
     // Bind params
@@ -73,6 +75,12 @@ class MySQLiDriver
         return $this->statement->execute();
     }
 
+    // Close connection
+    public function close()
+    {
+        return $this->database->close();
+    }
+
     // Get all result
     public function result()
     {
@@ -89,6 +97,12 @@ class MySQLiDriver
     public function resultArray()
     {
         return $this->statement->get_result()->fetch_array();
+    }
+
+    // Get result row
+    public function resultRow()
+    {
+        return $this->statement->get_result()->fetch_row();
     }
 
     // Bind param validator
@@ -108,98 +122,5 @@ class MySQLiDriver
         }
 
         return $bind;
-    }
-
-    // SELECT
-    public function select($value = null)
-    {
-        // Find all
-        if(! $value) {
-            $stmt = "SELECT * FROM $this->table";
-
-            return $this->query($stmt)->fetch_all();
-        }
-        // Find where matching value of primary key
-        else {
-            $stmt  = "SELECT * FROM $this->table WHERE $this->primaryKey = ?";
-            $this->query($stmt, [ $value ]);
-
-            return $this->resultAssoc();
-        }
-    }
-
-    // INSERT
-    public function insert($column, $value)
-    {
-        $field = ' ? ';
-        $count = count($value);
-        for ($i=1;$i<$count;$i++)
-        {
-            $field = $field . ', ? ';
-        }
-        $query  = "INSERT INTO $this->table ( $column ) VALUES ( $field )";
-        
-        return $this->query($query, $value);
-    }
-
-    // UPDATE
-    public function update($column, $value, $key)
-    {
-        $query = "UPDATE $this->table SET $column = ? WHERE $this->primaryKey = ?";
-        
-        return $this->query($query, [ $value, $key ]);
-    }
-
-    // DELETE
-    public function delete($value)
-    {
-        $query = "DELETE FROM $this->table WHERE $this->primaryKey = ?";
-        
-        return $this->query($query, [ $value ]);
-    }
-
-    // COUNT
-    public function count($key)
-    {
-        $query = "SELECT COUNT( ? ) AS $key FROM $this->table";
-        $this->query($query, [ $key ]);
-
-        return $this->resultAssoc();
-    }
-
-    // SUM
-    public function sum($key)
-    {
-        $query = "SELECT SUM( ? ) AS $key FROM $this->table";
-        $this->query($query, [ $key ]);
-
-        return $this->resultAssoc();
-    }
-
-    // AVG
-    public function avg($key)
-    {
-        $query = "SELECT AVG( ? ) AS $key FROM $this->table";
-        $this->query($query, [ $key ]);
-        
-        return $this->resultAssoc();
-    }
-
-    // MIN
-    public function min($key)
-    {
-        $query = "SELECT MIN( ? ) AS $key FROM $this->table";
-        $this->query($query, [ $key ]);
-        
-        return $this->resultAssoc();
-    }
-
-    // MAX
-    public function max($key)
-    {
-        $query = "SELECT MAX( ? ) AS $key FROM $this->table";
-        $this->query($query, [ $key ]);
-        
-        return $this->resultAssoc();
     }
 }

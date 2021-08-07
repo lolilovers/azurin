@@ -22,7 +22,10 @@ class Session
     public function get($id)
     {
         if(! empty($_SESSION[$id])) {
-            $data = $_SESSION[$id];    
+            $data = $_SESSION[$id];
+        }
+        else {
+            $data = null;
         }
         
         return $data;
@@ -31,7 +34,21 @@ class Session
     // Set
     public function set($id, $data)
     {
-        return $_SESSION[$id] = $data;
+        $_SESSION[$id] = $data;
+    }
+
+    // Get and forget
+    public function getForget($id)
+    {
+        if(! empty($_SESSION[$id])) {
+            $data           = $_SESSION[$id];
+            $_SESSION[$id]  = null;
+        }
+        else {
+            $data = null;
+        }
+
+        return $data;
     }
 
     // destroy
