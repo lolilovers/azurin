@@ -1,3 +1,7 @@
+# TemplateEngine
+
+TemplateEngine is a fork of salesforce/handlebars-php
+
 ## Getting Started
 
 At the minimum, we are required to have an array model and a template string. Alternatively we can have a file containing handlebars (or html, text, etc) expression.
