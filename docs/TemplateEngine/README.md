@@ -35,15 +35,8 @@ Below we are going to create the Handlebars object, set the partials loader, and
 ```php
 <?php
 
-# With composer we can autoload the Handlebars package
-require_once ("./vendor/autoload.php");
-
-# If not using composer, you can still load it manually.
-# require 'src/Handlebars/Autoloader.php';
-# Handlebars\Autoloader::register();
-
-use Handlebars\Handlebars;
-use Handlebars\Loader\FilesystemLoader;
+use Src\Framework\TemplateEngine\Loader\FilesystemLoader;
+use Src\Framework\TemplateEngine\TemplateEngine;
 
 # Set the partials files
 $partialsDir = __DIR__."/templates";
@@ -54,7 +47,7 @@ $partialsLoader = new FilesystemLoader($partialsDir,
 );
 
 # We'll use $handlebars throughout this the examples, assuming the will be all set this way
-$handlebars = new Handlebars([
+$handlebars = new TemplateEngine([
     "loader" => $partialsLoader,
     "partials_loader" => $partialsLoader
 ]);
