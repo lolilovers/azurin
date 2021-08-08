@@ -41,4 +41,4 @@ $query->sql(); // INSERT INTO "friends" ("user_id", "friend_id") VALUES (?, ?) R
 $query->params(); // [11, 30]
 ```
 
-**[Back](../)**
+**[Back](./)**
