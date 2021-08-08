@@ -1,6 +1,6 @@
 # Introduction
 
-QueryBuilder is a fork of latitude/latitude, SQL query builder with zero dependencies and a fluent interface.
+Builder is a fork of latitude/latitude, SQL query builder with zero dependencies and a fluent interface.
 
 ```php
 
