@@ -1,8 +1,3 @@
----
-layout: default
-title: Insert Queries
----
-
 Inserts can be performed with a single row:
 
 ```php

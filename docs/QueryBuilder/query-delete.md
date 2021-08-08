@@ -1,8 +1,3 @@
----
-layout: default
-title: Delete Queries
----
-
 It is recommended to always include a `WHERE` statement:
 
 ```php

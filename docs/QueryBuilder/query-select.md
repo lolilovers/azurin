@@ -1,8 +1,3 @@
----
-layout: default
-title: Select Queries
----
-
 A simple select will include all columns:
 
 ```php

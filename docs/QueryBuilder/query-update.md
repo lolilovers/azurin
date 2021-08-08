@@ -1,8 +1,3 @@
----
-layout: default
-title: Update Queries
----
-
 It is recommended to always include a `WHERE` statement:
 
 ```php

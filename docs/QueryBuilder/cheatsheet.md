@@ -1,8 +1,3 @@
----
-layout: default
-title: Cheatsheet
----
-
 # Cheatsheet
 
 - [Criteria](#criteria)
