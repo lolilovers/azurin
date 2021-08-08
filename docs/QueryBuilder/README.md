@@ -1,6 +1,6 @@
 # Introduction
 
-QueryBuilder is a fork of Latitude SQL query builder with zero dependencies and a fluent interface.
+QueryBuilder is a fork of latitude/latitude SQL query builder with zero dependencies and a fluent interface.
 It supports most of [SQL-92](https://en.wikipedia.org/wiki/SQL-92) as well as
 database specific functionality:
 
