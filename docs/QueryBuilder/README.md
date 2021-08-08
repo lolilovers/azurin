@@ -1,16 +1,13 @@
 # Introduction
 
-Latitude is a SQL query builder with zero dependencies and a fluent interface.
+QueryBuilder is a fork of Latitude SQL query builder with zero dependencies and a fluent interface.
 It supports most of [SQL-92](https://en.wikipedia.org/wiki/SQL-92) as well as
 database specific functionality:
 
 ```php
-use Latitude\QueryBuilder\Engine\CommonEngine;
-use Latitude\QueryBuilder\QueryFactory;
 
-use function Latitude\QueryBuilder\field;
+$factory = $this->builder();
 
-$factory = new QueryFactory(new CommonEngine());
 $query = $factory
     ->select('id', 'username')
     ->from('users')
