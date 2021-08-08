@@ -46,14 +46,14 @@ search('last_name')->notEnds('rump')
 ```
 
 ```php
-use function Latitude\QueryBuilder\on;
+use function Src\Framework\Database\on;
 
 // "countries"."id" = "users"."country_id"
 on('countries.id', 'users.country_id')
 ```
 
 ```php
-use function Latitude\QueryBuilder\group;
+use function Src\Framework\Database\group;
 
 // ("username" = ? OR "first_name" = ?) AND "is_active" = ?
 group(
@@ -69,7 +69,7 @@ any `%s` variable will be replaced with a statement. Statements can be any objec
 implementing `StatementInterface`, including queries and expressions._
 
 ```php
-use function Latitude\QueryBuilder\express;
+use function Src\Framework\Database\express;
 
 // "execute_at" <= NOW()
 express('%s <= NOW()', identify('execute_at'))
@@ -78,14 +78,14 @@ express('%s <= NOW()', identify('execute_at'))
 _Unlike the `express()` helper, `criteria()` will produce a `CriteriaInterface`._
 
 ```php
-use function Latitude\QueryBuilder\criteria;
+use function Src\Framework\Database\criteria;
 
 // "orders"."total" > ?
 criteria('%s > %s', identify('orders.total'), 100.00)
 ```
 
 ```php
-use function Latitude\QueryBuilder\literal;
+use function Src\Framework\Database\literal;
 
 // "orders"."is_complete" = 1
 criteria('%s = %d', identify('orders.is_complete'), literal(1))
@@ -94,7 +94,7 @@ criteria('%s = %d', identify('orders.is_complete'), literal(1))
 ## [](#aliases)Aliases
 
 ```php
-use function Latitude\QueryBuilder\alias;
+use function Src\Framework\Database\alias;
 
 // "users"."id" AS "uid"
 alias('users.id', 'uid')
@@ -103,7 +103,7 @@ alias('users.id', 'uid')
 ## [](#functions)Functions
 
 ```php
-use function Latitude\QueryBuilder\func;
+use function Src\Framework\Database\func;
 
 // COUNT("users"."id")
 func('COUNT', 'users.id')
@@ -115,8 +115,8 @@ _By default functions assume identifiers as parameters, use `param()` for scalar
 
 
 ```php
-use function Latitude\QueryBuilder\func;
-use function Latitude\QueryBuilder\param;
+use function Src\Framework\Database\func;
+use function Src\Framework\Database\param;
 
 // POINT(?, ?)
 func('POINT', param(1), param(2))
@@ -125,7 +125,7 @@ func('POINT', param(1), param(2))
 ## [](#ordering)Ordering
 
 ```php
-use function Latitude\QueryBuilder\order;
+use function Src\Framework\Database\order;
 
 // "total" DESC
 order('total', 'desc');
@@ -134,8 +134,8 @@ order('total', 'desc');
 ## [](#identifiers)Identifiers
 
 ```php
-use function Latitude\QueryBuilder\identify;
-use function Latitude\QueryBuilder\identifyAll;
+use function Src\Framework\Database\identify;
+use function Src\Framework\Database\identifyAll;
 
 // "users"."username"
 identify('users.username')
@@ -148,8 +148,8 @@ identifyAll(['id', 'username'])
 ## [](#parameters)Parameters
 
 ```php
-use function Latitude\QueryBuilder\param;
-use function Latitude\QueryBuilder\paramAll;
+use function Src\Framework\Database\param;
+use function Src\Framework\Database\paramAll;
 
 // ?
 param(15)
@@ -160,7 +160,7 @@ paramAll(['a', 5, 20.00])
 ## [](#lists)Lists
 
 ```php
-use function Latitude\QueryBuilder\listing;
+use function Src\Framework\Database\listing;
 
 // ?, ?, ?, ?, ?
 listing([1, 1, 2, 3, 5])
