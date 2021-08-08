@@ -1,0 +1,213 @@
+#!/usr/bin/php
+<?php
+
+/**
+ * ===========================
+ * Command Line Tool
+ * ===========================
+ */
+
+// Root path
+define('ROOTPATH', __DIR__ . '\src\\');
+
+// Define src path
+define('SRCPATH', ROOTPATH . 'azurin\\');
+
+// Autoloader
+//require_once SRCPATH . 'Framework/Common/autoloader.php';
+
+// List
+if (! isset($argv[1]))
+{
+    // Show list commands
+    echo "\r\n---- Azurin Command Line Tool ----\r\n";
+    echo "\r\nCommands:";
+    echo "\r\n1. [serve] [port] : Run local development server";
+    echo "\r\n2. [create] [controller/model/view] [name] : Create skeleton file";
+    echo "\r\n\r\n";
+
+    exit();
+}
+
+// Local development server
+else if ($argv[1] == 'serve')
+{
+    // Server
+    $port   = isset($argv[2]) ? $argv[2] : '8080';
+    $server = 'php -S localhost:' . $port . ' -t src/';
+
+    // Display information
+    echo "\r\nAzurin local development server started";
+    echo "\r\npress CTRL+C to stop\r\n\r\n";
+
+    // Run server
+    return exec($server);
+}
+
+// Create something
+else if ($argv[1] == 'create')
+{
+    // Get type and name
+    $type   = isset($argv[2]) ? $argv[2] : null;
+    $name   = isset($argv[3]) ? $argv[3] : null;
+
+    echo "\r\n";
+
+    // valid input
+    if (isset($type) && isset($name))
+    {
+        // Controller
+        if ($type == 'controller')
+        {
+            $controllerPath = SRCPATH . 'Controllers/';
+            $controller     = $controllerPath . $name . '.php';
+
+            // Already exist
+            if (file_exists($controller))
+            {
+                echo "Controller " . $name . " already exist";
+            }
+            // Create a controller
+            else
+            {
+                $file   = fopen($controller, "w") or die("Unable to open file!");
+                $txt    =
+
+// ---- begin writing ----
+"<?php
+
+namespace Azurin\\Controllers;
+
+use Azurin\\Framework\\Controller;
+use Azurin\\Framework\\CSRF\\CSRF AS csrf;
+
+class $name extends Controller
+{
+    public function index()
+    {
+        
+    }
+}";
+// ---- end writing ----
+
+                fwrite($file, $txt);
+                fclose($file);
+                echo "Created controller " . $name;
+            }
+        }
+        // Model
+        else if ($type == 'model')
+        {
+            $modelPath = SRCPATH . 'Models/';
+            $model     = $modelPath . $name . '.php';
+
+            // Already exist
+            if (file_exists($model))
+            {
+                echo "Model " . $name . " already exist";
+            }
+            // Create a model
+            else
+            {
+                $file   = fopen($model, "w") or die("Unable to open file!");
+                $txt    =
+
+// ---- begin writing ----
+"<?php
+
+namespace Azurin\\Models;
+
+use Azurin\\Framework\\Model;
+
+use function Azurin\\Framework\\Database\\identifyAll;
+use function Azurin\\Framework\\Database\\criteria;
+use function Azurin\\Framework\\Database\\identify;
+use function Azurin\\Framework\\Database\\paramAll;
+use function Azurin\\Framework\\Database\\express;
+use function Azurin\\Framework\\Database\\literal;
+use function Azurin\\Framework\\Database\\listing;
+use function Azurin\\Framework\\Database\\search;
+use function Azurin\\Framework\\Database\\alias;
+use function Azurin\\Framework\\Database\\field;
+use function Azurin\\Framework\\Database\\group;
+use function Azurin\\Framework\\Database\\order;
+use function Azurin\\Framework\\Database\\param;
+use function Azurin\\Framework\\Database\\func;
+use function Azurin\\Framework\\Database\\on;
+
+class $name extends Model
+{
+    protected " . '$table' . " = '';
+    protected " . '$primaryKey' . " = '';
+
+}";
+// ---- end writing ----
+
+                fwrite($file, $txt);
+                fclose($file);
+                echo "Created model " . $name;
+            }
+        }
+        // View
+        else if ($type == 'view')
+        {
+            $viewPath = SRCPATH . 'Views/';
+            $view     = $viewPath . $name . '.html';
+
+            // Already exist
+            if (file_exists($view))
+            {
+                echo "View " . $name . " already exist";
+            }
+            // Create a view
+            else
+            {
+                $file   = fopen($view, "w") or die("Unable to open file!");
+                $txt    = 
+
+// ---- begin writing ----
+'<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+';
+// ---- end writing ----
+
+                fwrite($file, $txt);
+                fclose($file);
+                echo "Created view " . $name;
+            }
+        }
+        // Invalid input
+        else
+        {
+            echo "Command not found";
+        }
+    }
+    // Too few argument
+    else
+    {
+        echo "Argument can't be null";
+    }
+    
+    echo "\r\n\r\n";
+
+    exit();
+}
+
+// Not found
+else
+{
+    echo "\r\nCommand not found";
+    exit();
+}
+
+?>

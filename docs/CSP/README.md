@@ -7,7 +7,7 @@ CSPBuilder is a fork of paragonie/csp-builder
 ```php
 <?php
 
-use Src\Framework\CSP\CSPBuilder;
+use Azurin\Framework\CSP\CSPBuilder;
 
 $csp = CSPBuilder::fromFile('/path/to/source.json');
 $csp->sendCSPHeader();
@@ -19,7 +19,7 @@ You can also load the configuration from a JSON string, like so:
 ```php
 <?php
 
-use Src\Framework\CSP\CSPBuilder;
+use Azurin\Framework\CSP\CSPBuilder;
 
 $configuration = file_get_contents('/path/to/source.json');
 if (!is_string($configuration)) {
@@ -35,7 +35,7 @@ Finally, you can just pass an array to the first argument of the constructor:
 ```php
 <?php
 
-use Src\Framework\CSP\CSPBuilder;
+use Azurin\Framework\CSP\CSPBuilder;
 
 $configuration = file_get_contents('/path/to/source.json');
 if (!is_string($configuration)) {
@@ -106,7 +106,7 @@ $csp->sendCSPHeader();
 ```php
 <?php
 
-use Src\Framework\CSP\CSPBuilder;
+use Azurin\Framework\CSP\CSPBuilder;
 
 $csp = CSPBuilder::fromFile('/path/to/source.json');
 

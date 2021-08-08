@@ -35,8 +35,8 @@ Below we are going to create the Handlebars object, set the partials loader, and
 ```php
 <?php
 
-use Src\Framework\TemplateEngine\Loader\FilesystemLoader;
-use Src\Framework\TemplateEngine\TemplateEngine;
+use Azurin\Framework\TemplateEngine\Loader\FilesystemLoader;
+use Azurin\Framework\TemplateEngine\TemplateEngine;
 
 # Set the partials files
 $partialsDir = __DIR__."/templates";
@@ -88,7 +88,7 @@ $model = [
 
 #### Render Template
 
-Use the method `Src\Framework\TemplateEngine::render($template, $model)` to render you template once everything is created.
+Use the method `Azurin\Framework\TemplateEngine::render($template, $model)` to render you template once everything is created.
 
 ***$template*** : Template can be the name of the file or a string containing the handlebars/html.
 
@@ -678,9 +678,9 @@ $object->{'@index'} = 'carrot';
 $object->{'@unknown'} = 'zucchini';
 $data = ['objects' => [$object]];
 
-$engine = new Src\Framework\TemplateEngine\TemplateEngine(array(
-    'loader' => new Src\Framework\TemplateEngine\Loader\StringLoader(),
-    'helpers' => new Src\Framework\TemplateEngine\Helpers(),
+$engine = new Azurin\Framework\TemplateEngine\TemplateEngine(array(
+    'loader' => new Azurin\Framework\TemplateEngine\Loader\StringLoader(),
+    'helpers' => new Azurin\Framework\TemplateEngine\Helpers(),
     'enableDataVariables'=> $enabled,
 ));
 $engine->render($template, $data)

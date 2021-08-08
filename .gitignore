@@ -1,7 +1,7 @@
 # Ignore this
-src/Storage/session/*
-src/Storage/cache/*
-src/Storage/log/*
+#src/azurin/Storage/session/*
+#src/azurin/Storage/cache/*
+#src/azurin/Storage/log/*
 $RECYCLE.BIN/
 .AppleDouble
 ehthumbs.db
