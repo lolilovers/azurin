@@ -1,21 +1,3 @@
----
-
-#handlebars-php
-
----
-
-#### A simple, logic-less, yet powerful templating engine for PHP
-
----
-
-Name: **handlebars-php**
-
-License: MIT
-
-Requirements: PHP >= 5.4
-
----
-
 ## About Handlebars
 
 Handlebars provides the power necessary to let you build semantic templates effectively with no frustration,
