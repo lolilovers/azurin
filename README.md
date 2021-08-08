@@ -2,7 +2,7 @@
 Simple PHP Framework
 
 ## Prerequisites
-Min PHP v8.0.5
+Min PHP v8.x
 
 ## Breaking from v1.x
 1. Deprecation for send_404 function, now handled by response handler
