@@ -88,7 +88,7 @@ $model = [
 
 #### Render Template
 
-Use the method `Handlebars\Handlebars::render($template, $model)` to render you template once everything is created.
+Use the method `Src\Framework\TemplateEngine::render($template, $model)` to render you template once everything is created.
 
 ***$template*** : Template can be the name of the file or a string containing the handlebars/html.
 
@@ -619,7 +619,7 @@ To enable the new data variables, set the `enableDataVariables` option to `true`
 instance.
 
 ```php
-$handlebars = new Handlebars([
+$handlebars = new TemplateEngine([
     "loader" => $partialsLoader,
     "partials_loader" => $partialsLoader,
     "enableDataVariables" => true
@@ -678,9 +678,9 @@ $object->{'@index'} = 'carrot';
 $object->{'@unknown'} = 'zucchini';
 $data = ['objects' => [$object]];
 
-$engine = new \Handlebars\Handlebars(array(
-    'loader' => new \Handlebars\Loader\StringLoader(),
-    'helpers' => new \Handlebars\Helpers(),
+$engine = new Src\Framework\TemplateEngine\TemplateEngine(array(
+    'loader' => new Src\Framework\TemplateEngine\Loader\StringLoader(),
+    'helpers' => new Src\Framework\TemplateEngine\Helpers(),
     'enableDataVariables'=> $enabled,
 ));
 $engine->render($template, $data)
