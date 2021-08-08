@@ -12,7 +12,7 @@
 ## [](#criteria)Criteria
 
 ```php
-use function Latitude\QueryBuilder\field;
+use function Src\Framework\Database\field;
 
 // "users"."id" = ?
 field('users.id')->eq(100)
@@ -35,7 +35,7 @@ field('parent_id')->isNotNull();
 ```
 
 ```php
-use function Latitude\QueryBuilder\search;
+use function Src\Framework\Database\search;
 
 // "username" LIKE '%admin%'
 search('username')->contains('admin')
