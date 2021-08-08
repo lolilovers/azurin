@@ -143,7 +143,4 @@ $query = $factory
     ->compile();
 ```
 
-_**Note:** When using the SQL Server engine an offset **must** be defined for
-the limit to be applied! Use `offset(0)` when no offset is desired._
-
-**[Back](../)**
+**[Back](./)**
