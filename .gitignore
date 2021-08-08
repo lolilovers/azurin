@@ -1,7 +1,7 @@
 # Ignore this
-#src/azurin/Storage/session/*
-#src/azurin/Storage/cache/*
-#src/azurin/Storage/log/*
+src/azurin/Storage/session/*
+src/azurin/Storage/cache/*
+src/azurin/Storage/log/*
 $RECYCLE.BIN/
 .AppleDouble
 ehthumbs.db
@@ -22,4 +22,4 @@ vendor/
 *.msp
 ._*
 *~
-#.env
+.env
