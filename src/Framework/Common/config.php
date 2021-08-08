@@ -30,9 +30,17 @@ define('DB_PASSWORD', $_ENV['DB_PASSWORD']);
 define('CACHE_DEFAULT_EXPIRE', $_ENV['CACHE_DEFAULT_EXPIRE']);
 
 // Development mode
-define('ERR_DISPLAY', $_ENV['DEV_MODE']);
+define('DEV_MODE', $_ENV['DEV_MODE']);
 
-// Encryption key
+// Hot reload
+define('HR_ENABLE', $_ENV['HR_ENABLE']);
+define('HR_WATCHER', $_ENV['HR_WATCHER']);
+
+// Content security policy
+define('CSP_ENABLE', $_ENV['CSP_ENABLE']);
+define('CSP_FILE', $_ENV['CSP_FILE']);
+
+// Encryption
 define('ENCRYPTION_KEY', $_ENV['ENCRYPTION_KEY']);
 
 // Session path

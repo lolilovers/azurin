@@ -3,7 +3,7 @@
 namespace Src\Framework\CSRF;
 
 class CSRF {
-
+    
     private static function startSession()
     {
         if ( !isset($_SESSION) && session_status() === PHP_SESSION_NONE) {
@@ -11,16 +11,17 @@ class CSRF {
         }
 
         if ( !isset($_SESSION['X-CSRF-TOKEN-LIST']) ) {
-            $_SESSION['X-CSRF-TOKEN-LIST'] = null; // initializing the index if not exist only
+            // initializing the index if not exist only
+            $_SESSION['X-CSRF-TOKEN-LIST'] = null;
         }
     }
 
     private static function randomToken()
     {
-
         $keySet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-        for($i = 0; $i < 5; $i++){
+        for($i = 0; $i < 5; $i++)
+        {
             $keySet = str_shuffle($keySet);
         }
 
@@ -28,35 +29,30 @@ class CSRF {
 
         $clientIp = self::getRealIpAddr();
 
-        if (phpversion() < 5.5)
-        {
+        if (phpversion() < 5.5) {
             $hashedToken = hash('sha256', base64_encode($keySet.$userAgent.$clientIp));
         }
-        else
-        {
+        else {
             $hashedToken = base64_encode(password_hash(base64_encode($keySet.$userAgent.$clientIp), PASSWORD_BCRYPT));
         }
 
         self::setToken($hashedToken);
 
         return $hashedToken;
-
     }
 
     private static function getRealIpAddr()
     {
-        if (!empty($_SERVER['HTTP_CLIENT_IP']))
-        {
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             $ip=$_SERVER['HTTP_CLIENT_IP'];
         }
-        elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
-        {
+        elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
         }
-        else
-        {
+        else {
             $ip=$_SERVER['REMOTE_ADDR'];
         }
+
         return $ip;
     }
 
@@ -66,8 +62,7 @@ class CSRF {
 
         $tokenList = unserialize($_SESSION['X-CSRF-TOKEN-LIST']);
 
-        if (!is_array($tokenList))
-        {
+        if (!is_array($tokenList)) {
             $tokenList = array();
         }
 
@@ -80,10 +75,11 @@ class CSRF {
         self::startSession();
 
         $tokenList = unserialize($_SESSION['X-CSRF-TOKEN-LIST']);
-        if(is_array($tokenList) && in_array($token, $tokenList)){
+        if(is_array($tokenList) && in_array($token, $tokenList)) {
             self::removeToken($token);
             return true;
-        }else{
+        }
+        else {
             return false;
         }
     }
@@ -109,13 +105,15 @@ class CSRF {
 
             if(isset($arrData["token"]) && !empty($arrData["token"])){
                 $token = $arrData["token"];
-            } else {
+            }
+            else {
                 return false;
             }
 
             return self::checkToken($token);
 
-        } else {
+        }
+        else {
             return false;
         }
     }
@@ -148,18 +146,19 @@ class CSRF {
                 "method" => "ALL",
                 "token" => $_POST['_token']
             ));
-        } else if(isset($_GET['_token'])) {
+        }
+        else if(isset($_GET['_token'])) {
             return self::authToken(array(
                 "method" => "ALL",
                 "token" => $_GET['_token']
             ));
-        } else {
+        }
+        else {
             return self::authToken(array(
                 "method" => "ALL",
                 "token" => null
             ));
         }
-
     }
 
     public static function flushToken()

@@ -8,15 +8,18 @@
 
 namespace Src\Framework;
 
-use Src\Framework\TemplateEngine\TemplateEngine;
 use Src\Framework\TemplateEngine\Loader\FilesystemLoader;
+use Src\Framework\HotReload\Reloader\HotReloader;
+use Src\Framework\TemplateEngine\TemplateEngine;
+use Src\Framework\Services\NativeRenderer;
 use Src\Framework\Services\Encryption;
 use Src\Framework\Services\Session;
 use Src\Framework\Services\Cookie;
-use Src\Framework\Services\Input;
 use Src\Framework\Services\Output;
-use Src\Framework\Services\NativeRenderer;
 use Src\Framework\Services\Cache;
+use Src\Framework\Services\Files;
+use Src\Framework\Services\Input;
+use Src\Framework\CSP\CSPBuilder;
 
 class Controller
 {
@@ -24,6 +27,15 @@ class Controller
     protected $render = [];
     protected $model = '';
     protected $cache = '';
+
+    public function __construct()
+    {
+        // Content security policy
+        $this->csp();
+
+        // Hot reloader
+        $this->hotReload();
+    }
 
     // Renderer service
     public function view($view, $data = [], $viewEngine = false)
@@ -103,6 +115,14 @@ class Controller
         return header('Location: ' . URL . $redirect);
     }
 
+    // Hot reload service
+    public function hotReload()
+    {
+        if (HR_ENABLE && DEV_MODE) {
+            return new HotReloader(HR_WATCHER);
+        }
+    }
+
     // Output service
     public function output()
     {
@@ -113,6 +133,12 @@ class Controller
     public function input()
     {
         return new Input();
+    }
+
+    // Files service
+    public function files()
+    {
+        return new Files();
     }
 
     // Cookie service
@@ -133,5 +159,15 @@ class Controller
         $key = ENCRYPTION_KEY;
         
         return new Encryption($key);
+    }
+
+    // Content security policy service
+    public function csp()
+    {
+        if (CSP_ENABLE) {
+            $csp = CSPBuilder::fromFile(ROOTPATH . CSP_FILE);
+
+            return $csp->sendCSPHeader();
+        }
     }
 }
