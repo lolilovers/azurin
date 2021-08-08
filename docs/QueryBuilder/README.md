@@ -31,14 +31,14 @@ databases that follow SQL standards.
 
 Getting Started
 
-- [Quick Reference](cheatsheet)
+- [Quick Reference](cheatsheet.md)
 
 Query Types
 
-- [SELECT](query-select)
-- [INSERT](query-insert)
-- [UPDATE](query-update)
-- [DELETE](query-delete)
+- [SELECT](query-select.md)
+- [INSERT](query-insert.md)
+- [UPDATE](query-update.md)
+- [DELETE](query-delete.md)
 
 ## Booleans and Nulls
 
