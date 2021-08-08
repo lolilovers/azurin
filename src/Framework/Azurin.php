@@ -23,9 +23,34 @@ Class Azurin
 	// Entry point
 	public function listen()
 	{
-		// Request
+		/**
+		 * ---- Request Handler ----
+		 * process client request 
+		 * and parse to array
+		 * 
+		 * @return array
+		 */
 		$route = $this->requestHandler();
-		// Response
+
+		/**
+		 * ---- Route ----
+		 * Before the route is sent to response, you can
+		 * easily create a custom filter or custom
+		 * route definition here
+		 * 
+		 * route:
+		 * $route[0] is controller
+		 * $route[1] is method
+		 * 
+		 * example:
+		 * $route = new MyFilter()->myMiddleware($route);
+		 * $route = new MyRouter($route)->getRoute();
+		 * 
+		 * ---- Response Handler ----
+		 * call controller & method based on route
+		 * 
+		 * @param array
+		 */
 		$this->responseHandler($route);
 	}
 	
