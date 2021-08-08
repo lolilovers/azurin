@@ -11,8 +11,8 @@ namespace Src\Framework\Services;
 class MySQLiDriver
 {
     protected $mysqli;
-    protected $statement;
     protected $prepared;
+    protected $statement;
 
     // Database configuration
     public function __construct(

@@ -6,7 +6,7 @@
  * ===========================
  */
 
-// Path to root project directory
+// Define root project directory
 define('ROOTPATH', __DIR__.'/..//');
 
 // Bootstrap the app

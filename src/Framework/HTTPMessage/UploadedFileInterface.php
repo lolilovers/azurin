@@ -2,14 +2,6 @@
 
 namespace Src\Framework\HTTPMessage;
 
-/**
- * Value object representing a file uploaded through an HTTP request.
- *
- * Instances of this interface are considered immutable; all methods that
- * might change state MUST be implemented such that they retain the internal
- * state of the current instance and return an instance that contains the
- * changed state.
- */
 interface UploadedFileInterface
 {
     /**

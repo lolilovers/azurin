@@ -23,10 +23,10 @@ use Src\Framework\CSP\CSPBuilder;
 
 class Controller
 {
-    protected $view = '';
-    protected $render = [];
-    protected $model = '';
     protected $cache = '';
+    protected $model = '';
+    protected $render = [];
+    protected $view = '';
 
     public function __construct()
     {

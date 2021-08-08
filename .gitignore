@@ -1,2 +1,25 @@
-
-/vendor/
+# Ignore this
+src/Storage/session/*
+src/Storage/cache/*
+src/Storage/log/*
+$RECYCLE.BIN/
+.AppleDouble
+ehthumbs.db
+.LSOverride
+Desktop.ini
+.directory
+.DS_Store
+Thumbs.db
+.Trash-*
+.vscode/
+phpunit
+tests/*
+vendor/
+*.cab
+*.lnk
+*.msi
+*.msm
+*.msp
+._*
+*~
+#.env

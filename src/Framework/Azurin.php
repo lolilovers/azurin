@@ -2,7 +2,7 @@
 
 /**
  * ===========================
- * Azurin Micro Framework Core
+ * Azurin Framework Core
  * ===========================
  */
 
@@ -57,22 +57,22 @@ Class Azurin
 		// Check controller
 		if(! empty($request[0])) {
 			// controller exist
-			if(file_exists(SRCPATH.'Controllers/'.$request[0].'.php')) {
+			if(file_exists(SRCPATH.'Controllers/' . $request[0] . '.php')) {
 				$this->controller = $request[0];
 				unset($request[0]);
 			}
 			// controller not exist
 			else {
-				error_log('Controller or its method is not found: '.$request[0]);
+				error_log('Controller or its method is not found: '. $request[0]);
 				require_once SRCPATH.'Views/errors/notfound.html';
 				
-				return header($_SERVER["SERVER_PROTOCOL"]." 404");
+				return header($_SERVER["SERVER_PROTOCOL"] . " 404");
 				die;
 			}
 		}
 		
 		// Initialize & run controller
-		$this->controller = 'Src\Controllers\\'.$this->controller;
+		$this->controller = 'Src\Controllers\\' . $this->controller;
 		$this->controller = new $this->controller;
 		
 		// Check method
@@ -88,15 +88,15 @@ Class Azurin
 			}
 			// method not exist
 			else {
-				error_log('Controller method is not found: '.$request[1]);
+				error_log('Controller method is not found: '. $request[1]);
 				require_once SRCPATH.'Views/errors/notfound.html';
 				
-				return header($_SERVER["SERVER_PROTOCOL"]." 404");
+				return header($_SERVER["SERVER_PROTOCOL"] . " 404");
 				die;
 			}
 		}
 		
 		// Call the method & send arguments
-		call_user_func_array([$this->controller, $this->method], $this->args);
+		return call_user_func_array([$this->controller, $this->method], $this->args);
 	}
 }
