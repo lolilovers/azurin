@@ -22,4 +22,4 @@ $query->sql(); // DELETE FROM "users" LIMIT 5
 $query->params(); // []
 ```
 
-**[Back](../)**
+**[Back](./)**
