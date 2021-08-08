@@ -1,15 +1,3 @@
-## About Handlebars
-
-Handlebars provides the power necessary to let you build semantic templates effectively with no frustration,
-that keep the view and the code separated like we all know they should be.
-
-
-Fork of: [Handlebars.php by XaminProject](https://github.com/mardix/Handlebars)
-
-Handlebars, is the PHP port of [Handlebars.js](http://handlebarsjs.com/)
-
----
-
 ## Getting Started
 
 At the minimum, we are required to have an array model and a template string. Alternatively we can have a file containing handlebars (or html, text, etc) expression.
