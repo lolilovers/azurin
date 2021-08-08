@@ -27,4 +27,4 @@ $query->sql(); // UPDATE "users" SET "is_active" = ? WHERE "login_at" < ? RETURN
 $query->params(); // [false, '2018-01-01']
 ```
 
-**[Back](../)**
+**[Back](./)**
