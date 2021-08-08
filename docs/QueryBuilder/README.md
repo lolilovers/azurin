@@ -1,6 +1,6 @@
 # Introduction
 
-Builder is a fork of latitude/latitude, SQL query builder with zero dependencies and a fluent interface.
+This Builder is a fork of latitude/latitude, SQL query builder with zero dependencies and a fluent interface.
 
 ```php
 
