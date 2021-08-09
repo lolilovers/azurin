@@ -24,10 +24,9 @@ class Cookie
     // Get
     public function get($id)
     {
-        if(! empty($_COOKIE[$id])) {
+        if (! empty($_COOKIE[$id])) {
             $data = $_COOKIE[$id];
-        }
-        else {
+        } else {
             $data = null;
         }
         

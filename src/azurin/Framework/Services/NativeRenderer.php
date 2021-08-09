@@ -25,7 +25,7 @@ class NativeRenderer
         $this->render['view']       = $view;
 
         // Save data from request
-        if(! empty($data) && is_array($data)) {
+        if (! empty($data) && is_array($data)) {
             $this->render['data']   = $data;
         }
         

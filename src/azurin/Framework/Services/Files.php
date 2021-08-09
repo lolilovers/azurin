@@ -33,8 +33,7 @@ class Files
         // Move file
         if (move_uploaded_file($_FILES[$file]["tmp_name"], $target_file)) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }

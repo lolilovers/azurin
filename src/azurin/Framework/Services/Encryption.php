@@ -44,8 +44,7 @@
         if (hash_equals($hmac, $calcmac)) {
             // Match
             $data = $original_plaintext;
-        }
-        else {
+        } else {
             // Not match
             $data = null;
         }

@@ -23,9 +23,9 @@ use Azurin\Framework\CSP\CSPBuilder;
 
 class Controller
 {
+    protected $render = [];
     protected $cache = '';
     protected $model = '';
-    protected $render = [];
     protected $view = '';
 
     public function __construct()
@@ -57,8 +57,8 @@ class Controller
         unset($data);
         unset($viewEngine);
         
-        // Render with template engine
         if ($this->render['viewEngine']) {
+            // Render with template engine
             $templateEngineLoader   = new FilesystemLoader($this->render['viewPath']);
             $template               = new TemplateEngine([
                 "loader"            => $templateEngineLoader,

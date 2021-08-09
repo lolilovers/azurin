@@ -13,7 +13,7 @@ class Session
     // Start session
     public function __construct()
     {
-        if(! isset($_SESSION) && session_status() === PHP_SESSION_NONE) {
+        if (! isset($_SESSION) && session_status() === PHP_SESSION_NONE) {
             session_start();
         }
     }
@@ -21,10 +21,9 @@ class Session
     // Get
     public function get($id)
     {
-        if(! empty($_SESSION[$id])) {
+        if (! empty($_SESSION[$id])) {
             $data = $_SESSION[$id];
-        }
-        else {
+        } else {
             $data = null;
         }
         
@@ -40,11 +39,10 @@ class Session
     // Get and forget
     public function getForget($id)
     {
-        if(! empty($_SESSION[$id])) {
+        if (! empty($_SESSION[$id])) {
             $data           = $_SESSION[$id];
             $_SESSION[$id]  = null;
-        }
-        else {
+        } else {
             $data = null;
         }
 

@@ -38,15 +38,14 @@ class MySQLiDriver
         // Sanitize query
         $query  = $this->mysqli->real_escape_string($query);
 
-        // Non prepared query
         if (empty($value)) {
+            // Non prepared query
             $this->prepared     = false;
             $this->statement    = $this->mysqli->query($query);
 
             return $this->statement;
-        }
-        // Prepared query
-        else {
+        } else {
+            // Prepared query
             $this->prepared = true;
             $this->prepare($query);
             $this->bindParam($value);
@@ -68,8 +67,7 @@ class MySQLiDriver
     {
         $bind = '';
         
-        foreach ($value as $v)
-        {
+        foreach ($value as $v) {
             $bind = $bind . $this->bind($v);
         }
 
@@ -93,8 +91,7 @@ class MySQLiDriver
     {
         if($this->prepared) {
             $result = $this->statement->get_result()->fetch_all();
-        }
-        else {
+        } else {
             $result = $this->statement->fetch_all();
         }
 
@@ -106,8 +103,7 @@ class MySQLiDriver
     {
         if($this->prepared) {
             $result = $this->statement->get_result()->fetch_assoc();
-        }
-        else {
+        } else {
             $result = $this->statement->fetch_assoc();
         }
 
@@ -119,8 +115,7 @@ class MySQLiDriver
     {
         if($this->prepared) {
             $result = $this->statement->get_result()->fetch_array();
-        }
-        else {
+        } else {
             $result = $this->statement->fetch_array();
         }
 
@@ -132,8 +127,7 @@ class MySQLiDriver
     {
         if($this->prepared) {
             $result = $this->statement->get_result()->fetch_row();
-        }
-        else {
+        } else {
             $result = $this->statement->fetch_row();
         }
 
@@ -145,14 +139,11 @@ class MySQLiDriver
     {
         if (is_string($value)) {
             $bind = 's';
-        }
-        else if (is_double($value)) {
+        } elseif (is_double($value)) {
             $bind = 'd';
-        }
-        else if (is_integer($value)) {
+        } elseif (is_integer($value)) {
             $bind = 'i';
-        }
-        else if (is_bool($value)) {
+        } elseif (is_bool($value)) {
             $bind = 'b';
         }
 
