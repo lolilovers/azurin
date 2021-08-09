@@ -14,6 +14,7 @@ class Home extends Controller
             'version'   => AZURIN_VERSION,
             'desc'      => 'Simple PHP Framework'
         ];
-        echo $this->view('home/index', $data);
+        
+        return $this->view('home/index', $data);
     }
 }

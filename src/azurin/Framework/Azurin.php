@@ -51,7 +51,7 @@ Class Azurin
 		 * 
 		 * @param array
 		 */
-		$this->responseHandler($route);
+		return $this->responseHandler($route);
 	}
 	
 	// Request handler
@@ -120,6 +120,9 @@ Class Azurin
 		}
 		
 		// Call the method & send arguments
-		return call_user_func_array([$this->controller, $this->method], $this->args);
+		return call_user_func_array(
+			[$this->controller, $this->method],
+			$this->args
+		);
 	}
 }
