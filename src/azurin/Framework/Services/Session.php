@@ -1,11 +1,5 @@
 <?php
 
-/**
- * ===========================
- * Session
- * ===========================
- */
-
 namespace Azurin\Framework\Services;
 
 class Session

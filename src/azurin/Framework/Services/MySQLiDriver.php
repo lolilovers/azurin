@@ -1,11 +1,5 @@
 <?php
 
-/**
- * ===========================
- * MySQLi Driver
- * ===========================
- */
-
 namespace Azurin\Framework\Services;
 
 class MySQLiDriver

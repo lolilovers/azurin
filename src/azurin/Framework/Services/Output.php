@@ -1,11 +1,5 @@
 <?php
 
-/**
- * ===========================
- * Output
- * ===========================
- */
-
 namespace Azurin\Framework\Services;
 
 class Output

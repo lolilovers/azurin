@@ -1,11 +1,5 @@
 <?php
 
-/**
- * ===========================
- * Native Renderer
- * ===========================
- */
-
 namespace Azurin\Framework\Services;
 
 class NativeRenderer
@@ -46,5 +40,10 @@ class NativeRenderer
 
         // Return rendered output
         return $this->render['output'];
+    }
+
+    public function extend($view)
+    {
+        return $this->render($view, $this->render['data']);
     }
 }

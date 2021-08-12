@@ -1,15 +1,9 @@
 <?php
 
-/**
- * ===========================
- * Encryption
- * ===========================
- */
+namespace Azurin\Framework\Services;
 
- namespace Azurin\Framework\Services;
-
- class Encryption
- {
+class Encryption
+{
     // Passing secret key
     public function __construct(
         protected $key
@@ -52,4 +46,4 @@
         // Decrypted data
         return $data;
     }
- }
+}

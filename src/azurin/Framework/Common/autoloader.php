@@ -1,11 +1,5 @@
 <?php
 
-/**
- * ===========================
- * Autoloader
- * ===========================
- */
-
 // Autoload vendor
 if (file_exists(ROOTPATH . '/../vendor/autoload.php')) {
     require_once ROOTPATH . '/../vendor/autoload.php';

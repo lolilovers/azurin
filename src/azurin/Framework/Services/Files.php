@@ -1,11 +1,5 @@
 <?php
 
-/**
- * ===========================
- * Files
- * ===========================
- */
-
 namespace Azurin\Framework\Services;
 
 class Files

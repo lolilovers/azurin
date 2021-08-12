@@ -1,11 +1,5 @@
 <?php
 
-/**
- * ===========================
- * Cookie
- * ===========================
- */
-
 namespace Azurin\Framework\Services;
 
 class Cookie

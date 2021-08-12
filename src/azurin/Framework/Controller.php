@@ -1,11 +1,5 @@
 <?php
 
-/**
- * ===========================
- * Base Controller
- * ===========================
- */
-
 namespace Azurin\Framework;
 
 use Azurin\Framework\TemplateEngine\Loader\FilesystemLoader;
@@ -23,22 +17,47 @@ use Azurin\Framework\CSP\CSPBuilder;
 
 class Controller
 {
-    protected $render = [];
-    protected $cache = '';
-    protected $model = '';
-    protected $view = '';
+    protected $render  = [];
+    protected $cache   = '';
+    protected $model   = '';
+    protected $view    = '';
+    protected $encryption;
+    protected $hotReload;
+    protected $response;
+    protected $session;
+    protected $request;
+    protected $cookie;
+    protected $files;
+    protected $csp;
 
     public function __construct()
     {
         // Content security policy
-        $this->csp();
+        if (CSP_ENABLE) {
+            $this->csp = CSPBuilder::fromFile(ROOTPATH . CSP_FILE);
+            $this->csp->sendCSPHeader();
+        }
 
-        // Hot reloader
-        $this->hotReload();
+        // Encryption
+        $this->encryption   = new Encryption(ENCRYPTION_KEY);
+
+        // Hot reload
+        if (HR_ENABLE && DEV_MODE) {
+            $this->hotReload = new HotReloader(HR_WATCHER);
+        }
+
+        // Request & response
+        $this->response = new Output();
+        $this->request  = new Input();
+        $this->files    = new Files();
+        
+        // Session & cookie 
+        $this->cookie   = new Cookie($options = []);
+        $this->session  = new Session();
     }
 
     // Renderer service
-    public function view($view, $data = [], $viewEngine = false)
+    protected function view($view, $data = [], $viewEngine = TED_ENABLE)
     {
         // View & cache path
         $this->render['viewPath']   = SRCPATH . 'Views/';
@@ -82,26 +101,19 @@ class Controller
     }
 
     // Cache service
-    public function cache($cache, $expire = CACHE_DEFAULT_EXPIRE)
+    protected function cache($cache, $expire = CACHE_DEFAULT_EXPIRE)
     {
         // Cache file
         $this->cache    = $cache;
         $cachePath      = SRCPATH . 'Storage/cache/';
-        
         // Load cache
         $cacheLoader = new Cache($cachePath);
 
         return $cacheLoader->load($cache, $expire);
     }
-
-    // View extender
-    public function merge($view)
-    {
-        return $this->view($view, $this->render['data'], $this->render['viewEngine']);
-    }
     
     // Model loader
-    public function model($model)
+    protected function model($model)
     {
         $this->model  = 'Azurin\Models\\' . $model;
         
@@ -109,64 +121,8 @@ class Controller
     }
 
     // Redirect
-    public function redirect($redirect)
+    protected function redirect($redirect)
     {
         return header('Location: ' . URL . $redirect);
-    }
-
-    // Hot reload service
-    public function hotReload()
-    {
-        if (HR_ENABLE && DEV_MODE) {
-            return new HotReloader(HR_WATCHER);
-        }
-    }
-
-    // Output service
-    public function output()
-    {
-        return new Output();
-    }
-
-    // Input service
-    public function input()
-    {
-        return new Input();
-    }
-
-    // Files service
-    public function files()
-    {
-        return new Files();
-    }
-
-    // Cookie service
-    public function cookie($options = [])
-    {
-        return new Cookie($options);
-    }
-
-    // Session service
-    public function session()
-    {
-        return new Session();
-    }
-
-    // Encryption service
-    public function encryption()
-    {
-        $key = ENCRYPTION_KEY;
-        
-        return new Encryption($key);
-    }
-
-    // Content security policy service
-    public function csp()
-    {
-        if (CSP_ENABLE) {
-            $csp = CSPBuilder::fromFile(ROOTPATH . CSP_FILE);
-
-            return $csp->sendCSPHeader();
-        }
     }
 }

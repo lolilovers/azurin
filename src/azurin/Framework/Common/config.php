@@ -1,11 +1,5 @@
 <?php
 
-/**
- * ===========================
- * Configuration
- * ===========================
- */
-
 // Parse the .env file and send to the $_ENV variable
 $dotEnv = new Azurin\Framework\DotEnv\Loader(SRCPATH . '../.env');
 $dotEnv->parse();
@@ -42,6 +36,9 @@ define('CSP_FILE', $_ENV['CSP_FILE']);
 
 // Encryption
 define('ENCRYPTION_KEY', $_ENV['ENCRYPTION_KEY']);
+
+// Enable/disable template engine by default
+define('TED_ENABLE', $_ENV['TED_ENABLE']);
 
 // Session path
 ini_set('session.save_path', SRCPATH . '/Storage/session');

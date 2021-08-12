@@ -1,11 +1,5 @@
 <?php
 
-/**
- * ===========================
- * Cache
- * ===========================
- */
-
 namespace Azurin\Framework\Services;
 
 class Cache

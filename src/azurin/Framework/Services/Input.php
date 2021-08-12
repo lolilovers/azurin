@@ -1,11 +1,5 @@
 <?php
 
-/**
- * ===========================
- * Input
- * ===========================
- */
-
 namespace Azurin\Framework\Services;
 
 class Input

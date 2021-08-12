@@ -1,10 +1,6 @@
 <?php
 
-/**
- * ===========================
- * Azurin Framework Core
- * ===========================
- */
+// ---- Azurin Core v2.2 ----
 
 namespace Azurin\Framework;
 
@@ -35,16 +31,14 @@ Class Azurin
 		/**
 		 * ---- Route ----
 		 * Before the route is sent to response, you can
-		 * easily create a custom filter or custom
-		 * route definition here
+		 * easily create a custom filter here
 		 * 
 		 * route:
 		 * $route[0] is controller
 		 * $route[1] is method
 		 * 
 		 * example:
-		 * $route = new MyFilter()->myMiddleware($route);
-		 * $route = new MyRouter($route)->getRoute();
+		 * $route = myMiddleware($route);
 		 * 
 		 * ---- Response Handler ----
 		 * call controller & method based on route
