@@ -4,6 +4,8 @@
 
 namespace Azurin\Framework;
 
+use Azurin\Framework\Middleware;
+
 // Version
 if(! defined('AZURIN_VERSION'))
 {
@@ -14,38 +16,18 @@ Class Azurin
 {
 	protected $controller	= DEFAULT_CONTROLLER;
 	protected $method		= DEFAULT_METHOD;
-	protected $args			= [];	
+	protected $args			= [];
 	
 	// Entry point
 	public function listen()
 	{
-		/**
-		 * ---- Request Handler ----
-		 * process client request 
-		 * and parse to array
-		 * 
-		 * @return array
-		 */
-		$route = $this->requestHandler();
+		$filter		= new Middleware();
+		$route		= $this->requestHandler();
+		$before		= $filter->before($route);
+		$after		= $this->responseHandler($before);
+		$response	= $filter->after($after);
 
-		/**
-		 * ---- Route ----
-		 * Before the route is sent to response, you can
-		 * easily create a custom filter here
-		 * 
-		 * route:
-		 * $route[0] is controller
-		 * $route[1] is method
-		 * 
-		 * example:
-		 * $route = myMiddleware($route);
-		 * 
-		 * ---- Response Handler ----
-		 * call controller & method based on route
-		 * 
-		 * @param array
-		 */
-		return $this->responseHandler($route);
+		return $response;
 	}
 	
 	// Request handler

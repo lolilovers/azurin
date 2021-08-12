@@ -1,20 +1,13 @@
 #!/usr/bin/php
 <?php
 
-/**
- * ===========================
- * Command Line Tool
- * ===========================
- */
+// ---- The Command Line Tool ----
 
 // Root path
 define('ROOTPATH', __DIR__ . '\src\\');
 
 // Define src path
 define('SRCPATH', ROOTPATH . 'azurin\\');
-
-// Autoloader
-//require_once SRCPATH . 'Framework/Common/autoloader.php';
 
 // List
 if (! isset($argv[1]))
