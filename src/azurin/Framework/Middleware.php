@@ -8,7 +8,7 @@ class Middleware
     protected $request;
 
     // Before accessing controller
-    public function Before($req = [])
+    public function before($req = [])
     {
         // Do something here
         $this->request  = $req;
