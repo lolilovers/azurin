@@ -18,7 +18,7 @@ Class Azurin
 	protected $method		= DEFAULT_METHOD;
 	protected $args			= [];
 	
-	// Entry point
+	// Start listening
 	public function listen()
 	{
 		$filter		= new Middleware();
@@ -91,7 +91,7 @@ Class Azurin
 				require_once SRCPATH.'Framework/Views/errors/404.html';
 				http_response_code(404);
 
-				die;
+				die();
 			}
 		}
 		
