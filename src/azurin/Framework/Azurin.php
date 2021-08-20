@@ -64,10 +64,10 @@ Class Azurin
 			} else {
 				// controller not exist
 				error_log('Controller or its method is not found: '. $request[0]);
-				require_once SRCPATH.'Views/errors/notfound.html';
+				require_once SRCPATH.'Framework/Views/errors/404.html';
+				http_response_code(404);
 				
-				return header($_SERVER["SERVER_PROTOCOL"] . " 404");
-				die;
+				die();
 			}
 		}
 		
@@ -88,9 +88,9 @@ Class Azurin
 			} else {
 				// method not exist
 				error_log('Controller method is not found: '. $request[1]);
-				require_once SRCPATH.'Views/errors/notfound.html';
-				
-				return header($_SERVER["SERVER_PROTOCOL"] . " 404");
+				require_once SRCPATH.'Framework/Views/errors/404.html';
+				http_response_code(404);
+
 				die;
 			}
 		}
