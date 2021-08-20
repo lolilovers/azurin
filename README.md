@@ -7,12 +7,10 @@ Min PHP v8.x
 ## Breaking from v1.x
 - Deprecation for send_404 function, now handled by response handler
 - Deprecation mysqli wrapper, now use mysqli driver service
-- Deprecation javascript redirect, now using HTTP redirect
 - Deprecation autoload, now use spl autoload register
 - Source(view,model,etc...) now moved to src folder
 - Deprecation cache helper, now use cache service
 - Router feature removed, now use magic routing
-- Deprecation for javascript console function
 - Changed from MVVM pattern to MVC pattern
 
 ## New updates
@@ -21,6 +19,7 @@ Min PHP v8.x
 - New input, output, and files service
 - Added composer autoloading support
 - Added content security policy
+- Added global functions helper
 - Added query builder factory
 - Added encryption service
 - Added hot reload support

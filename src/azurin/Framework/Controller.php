@@ -111,18 +111,4 @@ class Controller
 
         return $cacheLoader->load($cache, $expire);
     }
-    
-    // Model loader
-    protected function model($model)
-    {
-        $this->model  = 'Azurin\Models\\' . $model;
-        
-        return new $this->model;
-    }
-
-    // Redirect
-    protected function redirect($redirect)
-    {
-        return header('Location: ' . URL . $redirect);
-    }
 }

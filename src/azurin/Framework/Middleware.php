@@ -14,11 +14,7 @@ class Middleware
         $this->request  = $req;
         $controller     = isset($req[0]) ? $req[0] : DEFAULT_CONTROLLER;
         $method         = isset($req[1]) ? $req[1] : DEFAULT_METHOD;
-        if ($method == 'view'
-            || $method == 'cache'
-            || $method == 'redirect'
-            || $method == 'model'
-        ){
+        if ($method == 'view' || $method == 'cache'){
             $this->request  = [
                 0 => $controller,
                 1 => DEFAULT_METHOD
