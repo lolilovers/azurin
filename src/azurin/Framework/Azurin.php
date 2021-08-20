@@ -20,7 +20,7 @@ Class Azurin
 	
 	// Start listening
 	public function listen()
-	{
+	{	
 		$filter		= new Middleware();
 		$route		= $this->requestHandler();
 		$before		= $filter->before($route);
@@ -42,9 +42,15 @@ Class Azurin
 			}
 		}
 		
-		// Magic router
-		if (isset($_GET['uri'])) {
-			$request = $_GET['uri'];
+		// Get request URI
+		$scheme = isset($_SERVER['REQUEST_SCHEME']) ?: 'http';
+		$uri = $scheme . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		$uri = str_replace(rtrim(URL, '/'), '', $uri);
+		$uri = ltrim($uri, '/');
+		
+		// Parse request URI
+		if (isset($uri)) {
+			$request = $uri;
 			$request = filter_var($request, FILTER_SANITIZE_URL);
 			$request = explode('/', $request);
 			
@@ -63,9 +69,9 @@ Class Azurin
 				unset($request[0]);
 			} else {
 				// controller not exist
+				http_response_code(404);
 				error_log('Controller or its method is not found: '. $request[0]);
 				require_once SRCPATH.'Framework/Views/errors/404.html';
-				http_response_code(404);
 				
 				die();
 			}
@@ -87,9 +93,9 @@ Class Azurin
 				}
 			} else {
 				// method not exist
+				http_response_code(404);
 				error_log('Controller method is not found: '. $request[1]);
 				require_once SRCPATH.'Framework/Views/errors/404.html';
-				http_response_code(404);
 
 				die();
 			}

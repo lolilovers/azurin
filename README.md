@@ -22,15 +22,13 @@ Simple PHP Framework
 ## New updates
 - Dual renderer service(TemplateEngine & NativeRenderer)
 - Enhanced logger, cookie, and session service
-- New input, output, and files service
+- Added input, output, and files service
+- Added development mode and debug tool
 - Added composer autoloading support
-- Added content security policy
 - Added global functions helper
 - Added query builder factory
+- Added CSP and CSRF support
 - Added encryption service
 - Added hot reload support
 - Added command line tool
-- Added development mode
-- Added CSRF service
 - Added .ENV support
-- Added debug tool

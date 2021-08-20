@@ -42,6 +42,7 @@ class NativeRenderer
         return $this->render['output'];
     }
 
+    // Extending view
     public function extend($view)
     {
         return $this->render($view, $this->render['data']);

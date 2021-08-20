@@ -5,6 +5,7 @@ namespace Azurin\Framework\Services;
 class Cache
 {
     public function __construct(
+        // Cache path
         protected $path
     ){}
 

@@ -13,6 +13,7 @@ class Home extends Controller
             'name'      => 'Azurin',
             'version'   => AZURIN_VERSION,
             'desc'      => 'Simple PHP Framework',
+            'year'      => date('Y'),
             'url'       => URL
         ];
         

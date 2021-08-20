@@ -20,7 +20,11 @@ require_once SRCPATH . 'Framework/Common/globalFunctions.php';
 require_once SRCPATH . 'Framework/Database/functions.php';
 
 // Third party dev tool loader
+require_once SRCPATH . 'Framework/ThirdParty/autoload.php';
+
+// Enable/disable third party
 if(DEV_MODE) {
-    require_once SRCPATH . 'Framework/ThirdParty/autoload.php';
     require_once SRCPATH . 'Framework/ThirdParty/filp/whoops/whoops.php';
+} else {
+    Kint::$enabled_mode = false;
 }
