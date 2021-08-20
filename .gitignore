@@ -22,4 +22,4 @@ vendor/
 *.msp
 ._*
 *~
-.env
+#.env

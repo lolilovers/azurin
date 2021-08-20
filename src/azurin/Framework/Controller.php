@@ -1,5 +1,7 @@
 <?php
 
+// ---- Base Controller ----
+
 namespace Azurin\Framework;
 
 use Azurin\Framework\TemplateEngine\Loader\FilesystemLoader;

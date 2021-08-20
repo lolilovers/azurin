@@ -1,10 +1,16 @@
-# Azurin Framework v2.2
+# Azurin 2.2
 Simple PHP Framework
 
 ## Prerequisites
-Min PHP v8.x
+- Minimum PHP version 8
+- Require mod_rewrite module enabled
 
-## Breaking from v1.x
+## Installation
+- Clone this repository
+- Configure the .ENV file (src/.env)
+- Point your server to public path (src/public)
+
+## Breaking from 1.x
 - Deprecation for send_404 function, now handled by response handler
 - Deprecation mysqli wrapper, now use mysqli driver service
 - Deprecation autoload, now use spl autoload register

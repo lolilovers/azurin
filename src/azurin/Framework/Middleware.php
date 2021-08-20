@@ -1,5 +1,7 @@
 <?php
 
+// ---- Middleware ----
+
 namespace Azurin\Framework;
 
 class Middleware
@@ -24,7 +26,7 @@ class Middleware
         return $this->request;
     }
 
-    // After acessing controller
+    // After accessing controller
     public function after($res)
     {
         // Do something here

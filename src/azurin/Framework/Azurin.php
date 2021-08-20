@@ -1,6 +1,6 @@
 <?php
 
-// ---- Azurin Core v2.2 ----
+// ---- Azurin Core ----
 
 namespace Azurin\Framework;
 

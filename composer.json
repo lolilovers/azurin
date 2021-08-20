@@ -1,6 +1,6 @@
 {
     "name": "lolilovers/azurin",
-    "description": "PHP framework",
+    "description": "Simple PHP Framework",
     "type": "project",
 	"autoload": {
         "psr-4": {

@@ -1,7 +1,7 @@
 #!/usr/bin/php
 <?php
 
-// ---- The Command Line Tool ----
+// ---- Command Line Tool ----
 
 // Root path
 define('ROOTPATH', __DIR__ . '\src\\');

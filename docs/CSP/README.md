@@ -1,6 +1,6 @@
 # Content Security Policy Builder
 
-This CSP is a fork of paragonie/csp-builder
+This CSP is based on paragonie/csp-builder
 
 ## Build a Content Security Policy header from a JSON configuration file
 

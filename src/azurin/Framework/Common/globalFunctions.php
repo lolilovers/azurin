@@ -21,8 +21,10 @@ if (! function_exists('h'))
     function h($string = null)
     {
         if ($string != null) {
-            return htmlspecialchars($string);
+            $string = htmlspecialchars($string);
         }
+
+        return $string;
     }
 }
 

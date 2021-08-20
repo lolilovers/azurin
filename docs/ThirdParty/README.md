@@ -1,6 +1,6 @@
 # Third Party Developer Tool
 
-This tool is based on composer installation of kint and whoops. No namespace changed, no porting implementation, no code changed.
+This tool is based on composer installation of kint-php/kint and filp/whoops.
 
 Kint and Whoops only activated when in development mode
 

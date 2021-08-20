@@ -1,6 +1,6 @@
 # TemplateEngine
 
-This TemplateEngine is a fork of salesforce/handlebars-php
+This TemplateEngine is based on salesforce/handlebars-php
 
 ## Getting Started
 

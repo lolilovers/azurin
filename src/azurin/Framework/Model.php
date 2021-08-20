@@ -1,5 +1,7 @@
 <?php
 
+// ---- Base Model ----
+
 namespace Azurin\Framework;
 
 use Azurin\Framework\Database\Engine\MySqlEngine;

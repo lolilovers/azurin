@@ -1,6 +1,6 @@
 # CSRF
 
-This CSRF is a fork of banujan6/csrf-handler
+This CSRF is based on banujan6/csrf-handler
 
 # Functions
 
