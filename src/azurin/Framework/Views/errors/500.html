@@ -1,100 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>500 - Internal Server Error</title>
-  <style>
-  * {
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
-  body {
-    padding: 0;
-    margin: 0;
-  }
-  #notfound {
-    position: relative;
-    height: 100vh;
-  }
-  #notfound .notfound {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
-  }
-  .notfound {
-    max-width: 767px;
-    width: 100%;
-    line-height: 1.4;
-    text-align: center;
-    padding: 15px;
-  }
-  .notfound .notfound-404 {
-    position: relative;
-    height: 220px;
-  }
-  .notfound .notfound-404 h1 {
-    font-family: 'Kanit', sans-serif;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
-    font-size: 186px;
-    font-weight: 200;
-    margin: 0px;
-    background: linear-gradient(130deg, #80FFFF, #025587);
-    color:transparent;
-    -webkit-background-clip: text;
-    background-clip: text;
-    text-transform: uppercase;
-  }
-  .notfound h2 {
-    font-family: 'Kanit', sans-serif;
-    font-size: 33px;
-    font-weight: 200;
-    text-transform: uppercase;
-    margin-top: 0px;
-    margin-bottom: 25px;
-    letter-spacing: 3px;
-  }
-  .notfound p {
-    font-family: 'Kanit', sans-serif;
-    font-size: 16px;
-    font-weight: 200;
-    margin-top: 0px;
-    margin-bottom: 25px;
-  }
-  @media only screen and (max-width: 480px) {
-    .notfound .notfound-404 {
-      position: relative;
-      height: 168px;
-    }
-    .notfound .notfound-404 h1 {
-      font-size: 142px;
-    }
-    .notfound h2 {
-      font-size: 22px;
-    }
-  }
-  </style>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>500 - Internal Server Error</title>
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		html{
+			font: normal 16px sans-serif;
+			color: #555;
+		}
+		section{
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 125px 100px;
+		}
+		@media (max-width: 1000px){
+			section{
+				padding: 100px 50px;
+			}
+		}
+		@media (max-width: 600px){
+			section{
+				padding: 80px 30px;
+			}
+		}
+		section h3.title{
+			color: #414a4f;
+			text-transform: capitalize; 
+			font: bold 32px 'Open Sans', sans-serif;
+			margin-bottom: 35px;
+			text-align: center;
+		}
+		.hero{
+			position: auto;
+			justify-content: center;
+			min-height: 100vh;
+			color: #fff;
+			text-align: center;
+		}
+		.hero .background-image{
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #0b304e;
+			z-index: -1;
+		}
+		.hero h1{
+			font: bold 60px 'Open Sans', sans-serif;
+			margin-bottom: 15px;
+		}
+		.hero h3{
+			font: normal 28px 'Open Sans', sans-serif;
+			margin-bottom: 40px;
+		}
+		@media (max-width: 800px){
+			.hero{
+				min-height: 600px;
+			}
+			.hero h1{
+				font-size: 48px;
+			}
+			.hero h3{
+				font-size: 24px;
+			}
+		}
+	</style>
 </head>
 <body>
-  <div id="notfound">
-    <div class="notfound">
-      <div class="notfound-404">
-        <h1>500</h1>
-      </div>
-      <h2>Oops! Something went wrong</h2>
-      <p>
-        Sorry for inconvenience, we're working on it.
-      </p>
-    </div>
-  </div>
+	<section class="hero">
+		<div class="background-image"></div>
+		<h1>500</h1>
+		<h3>Oops! Something went wrong</h3>
+	</section>
 </body>
 </html>

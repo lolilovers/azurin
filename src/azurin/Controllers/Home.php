@@ -9,14 +9,6 @@ class Home extends Controller
 {
     public function index()
     {
-        $data   = [
-            'name'      => 'Azurin',
-            'version'   => AZURIN_VERSION,
-            'desc'      => 'Simple PHP Framework',
-            'year'      => date('Y'),
-            'url'       => URL
-        ];
-        
-        return $this->view('hello_world', $data);
+        return $this->view('welcome');
     }
 }
