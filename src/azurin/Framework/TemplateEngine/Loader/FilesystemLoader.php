@@ -8,7 +8,7 @@ use Azurin\Framework\TemplateEngine\Loader;
 class FilesystemLoader implements Loader
 {
     private $_baseDir;
-    private $_extension = '.html';
+    private $_extension = '.php';
     private $_prefix = '';
     private $_templates = array();
 

@@ -9,7 +9,7 @@ class Output
     {
         // Link
         $scheme = isset($_SERVER['REQUEST_SCHEME']) ?: 'http';
-		$url = $scheme . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        $url = $scheme . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
         // REST Specific Status Codes
         if ($code == 200) {

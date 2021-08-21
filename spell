@@ -145,7 +145,7 @@ class $name extends Model
         else if ($type == 'view')
         {
             $viewPath = SRCPATH . 'Views/';
-            $view     = $viewPath . $name . '.html';
+            $view     = $viewPath . $name . '.php';
 
             // Already exist
             if (file_exists($view))
@@ -165,7 +165,7 @@ class $name extends Model
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>' . $name . '</title>
 </head>
 <body>
     

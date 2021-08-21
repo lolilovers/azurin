@@ -4,6 +4,7 @@ namespace Azurin\Framework\Services;
 
 class Input
 {
+    // Get vars from client request
     public function vars($var)
     {
         if (! empty($_GET[$var]) && ! empty($_POST[$var])) {
@@ -26,6 +27,7 @@ class Input
         return $var;
     }
 
+    // Same as $_GET
     public function get($var)
     {
         if (! empty($_GET[$var])) {
@@ -37,9 +39,9 @@ class Input
         return $var;
     }
 
+    // Same as $_POST
     public function post($var)
     {
-        // POST
         if (! empty($_POST[$var])) {
             $var = $_POST[$var];
         } else {
@@ -49,8 +51,22 @@ class Input
         return $var;
     }
 
+    // Get request method
     public function method()
     {
         return $_SERVER['REQUEST_METHOD'];
+    }
+
+    // Detect AJAX request
+    public function isAjax()
+    {
+        if (! empty($_SERVER['HTTP_X_REQUESTED_WITH'])
+            && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            // Detected
+            return true;
+        } else {
+            // Not detected
+            return false;
+        }
     }
 }

@@ -14,9 +14,9 @@ if(! defined('AZURIN_VERSION'))
 
 Class Azurin
 {
-	protected $controller	= DEFAULT_CONTROLLER;
-	protected $method		= DEFAULT_METHOD;
-	protected $args			= [];
+	protected $controller   = DEFAULT_CONTROLLER;
+	protected $method       = DEFAULT_METHOD;
+	protected $args         = [];
 	
 	// Start listening
 	public function listen()
