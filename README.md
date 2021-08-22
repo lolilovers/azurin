@@ -11,7 +11,6 @@ Simple PHP Framework
 - Point your server to public path (src/public)
 
 ## Breaking from 1.x
-- Deprecation for send_404 function, now handled by response handler
 - Deprecation mysqli wrapper, now use mysqli driver service
 - Deprecation autoload, now use spl autoload register
 - Source(view,model,etc...) now moved to src folder

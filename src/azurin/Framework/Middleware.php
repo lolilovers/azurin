@@ -17,10 +17,8 @@ class Middleware
         $controller     = isset($req[0]) ? $req[0] : DEFAULT_CONTROLLER;
         $method         = isset($req[1]) ? $req[1] : DEFAULT_METHOD;
         if ($method == 'view' || $method == 'cache'){
-            http_response_code(403);
-            require_once SRCPATH . 'Framework/Views/errors/403.html';
             
-            die();
+            return send_403();
         }
 
         return $this->request;

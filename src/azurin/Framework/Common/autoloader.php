@@ -15,8 +15,8 @@ spl_autoload_register(function ($class) {
 
 // Non class loader
 require_once SRCPATH . 'Framework/Common/config.php';
-require_once SRCPATH . 'Framework/Common/logger.php';
 require_once SRCPATH . 'Framework/Common/globalFunctions.php';
+require_once SRCPATH . 'Framework/Common/logger.php';
 require_once SRCPATH . 'Framework/Database/functions.php';
 
 // Third party dev tool loader

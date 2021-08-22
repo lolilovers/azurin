@@ -58,7 +58,7 @@ class Controller
         $this->session  = new Session();
     }
 
-    // Renderer service
+    // Renderer
     protected function view($view, $data = [], $viewEngine = TED_ENABLE)
     {
         // View & cache path
@@ -79,7 +79,7 @@ class Controller
         unset($viewEngine);
         
         if ($this->render['viewEngine']) {
-            // Render with template engine
+            // Render using template engine
             $templateEngineLoader   = new FilesystemLoader($this->render['viewPath']);
             $template               = new TemplateEngine([
                 "loader"            => $templateEngineLoader,
@@ -87,7 +87,7 @@ class Controller
             ]);
             $this->view = $template->render($this->render['view'], $this->render['data']);
         } else {
-            // Render with native renderer
+            // Render using native renderer
             $native     = new NativeRenderer($this->render['viewPath']);
             $this->view = $native->render($this->render['view'], $this->render['data']);
         }
@@ -102,7 +102,7 @@ class Controller
         return $this->view;
     }
 
-    // Cache service
+    // Cache
     protected function cache($cache, $expire = CACHE_DEFAULT_EXPIRE)
     {
         // Cache file

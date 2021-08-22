@@ -11,7 +11,7 @@ class Output
         $scheme = isset($_SERVER['REQUEST_SCHEME']) ?: 'http';
         $url = $scheme . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-        // REST Specific Status Codes
+        // REST specific status codes
         if ($code == 200) {
             $status = 'OK';
         } elseif ($code == 201) {
@@ -72,7 +72,7 @@ class Output
         return $response;
     }
 
-    // HTTP Cache
+    // HTTP cache
     public function cache($checksum, $timestamp)
     {
         $tsstring = gmdate('D, d M Y H:i:s ', $timestamp) . 'GMT';

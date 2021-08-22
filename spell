@@ -66,7 +66,7 @@ else if ($argv[1] == 'create')
                 $file   = fopen($controller, "w") or die("Unable to open file!");
                 $txt    =
 
-// ---- begin writing ----
+// ---- Begin writing ----
 "<?php
 
 namespace Azurin\\Controllers;
@@ -81,7 +81,7 @@ class $name extends Controller
         
     }
 }";
-// ---- end writing ----
+// ---- End writing ----
 
                 fwrite($file, $txt);
                 fclose($file);
@@ -105,7 +105,7 @@ class $name extends Controller
                 $file   = fopen($model, "w") or die("Unable to open file!");
                 $txt    =
 
-// ---- begin writing ----
+// ---- Begin writing ----
 "<?php
 
 namespace Azurin\\Models;
@@ -134,7 +134,7 @@ class $name extends Model
     protected " . '$primaryKey' . " = '';
 
 }";
-// ---- end writing ----
+// ---- End writing ----
 
                 fwrite($file, $txt);
                 fclose($file);
@@ -158,7 +158,7 @@ class $name extends Model
                 $file   = fopen($view, "w") or die("Unable to open file!");
                 $txt    = 
 
-// ---- begin writing ----
+// ---- Begin writing ----
 '<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -172,7 +172,7 @@ class $name extends Model
 </body>
 </html>
 ';
-// ---- end writing ----
+// ---- End writing ----
 
                 fwrite($file, $txt);
                 fclose($file);
