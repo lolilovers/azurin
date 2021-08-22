@@ -7,7 +7,6 @@ namespace Azurin\Framework;
 use Azurin\Framework\TemplateEngine\Loader\FilesystemLoader;
 use Azurin\Framework\HotReload\Reloader\HotReloader;
 use Azurin\Framework\TemplateEngine\TemplateEngine;
-use Azurin\Framework\Services\NativeRenderer;
 use Azurin\Framework\Services\Encryption;
 use Azurin\Framework\Services\Session;
 use Azurin\Framework\Services\Cookie;
@@ -58,7 +57,7 @@ class Controller
         $this->session  = new Session();
     }
 
-    // Renderer
+    // View renderer
     protected function view($view, $data = [], $viewEngine = TED_ENABLE)
     {
         // View & cache path
@@ -88,8 +87,7 @@ class Controller
             $this->view = $template->render($this->render['view'], $this->render['data']);
         } else {
             // Render using native renderer
-            $native     = new NativeRenderer($this->render['viewPath']);
-            $this->view = $native->render($this->render['view'], $this->render['data']);
+            $this->view = view($this->render['view'], $this->render['data']);
         }
         
         // Save rendered view
@@ -102,15 +100,23 @@ class Controller
         return $this->view;
     }
 
-    // Cache
+    // Cache loader
     protected function cache($cache, $expire = CACHE_DEFAULT_EXPIRE)
     {
-        // Cache file
+        // Cache path
         $this->cache    = $cache;
         $cachePath      = SRCPATH . 'Storage/cache/';
         // Load cache
         $cacheLoader = new Cache($cachePath);
 
         return $cacheLoader->load($cache, $expire);
+    }
+
+    // Model loader
+    protected function model($model)
+    {
+        $this->model = model($model);
+
+        return $this->model;
     }
 }
