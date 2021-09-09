@@ -7,8 +7,8 @@ Simple PHP Framework
 
 ## Installation
 - Clone this repository
-- Configure the .ENV file (src/.env)
-- Point your server to public path (src/public)
+- Configure the .ENV file (azurin/.env)
+- Point your server to public path
 
 ## Breaking from 1.x
 - Deprecation mysqli wrapper, now use mysqli driver service
