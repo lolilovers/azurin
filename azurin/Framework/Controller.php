@@ -35,7 +35,7 @@ class Controller
     {
         // Content security policy
         if (CSP_ENABLE) {
-            $this->csp = CSPBuilder::fromFile(ROOTPATH . CSP_FILE);
+            $this->csp = CSPBuilder::fromFile(SRCPATH . CSP_FILE);
             $this->csp->sendCSPHeader();
         }
 

@@ -1,8 +1,8 @@
 <?php
 
 // Autoload vendor
-if (file_exists(ROOTPATH . '/../vendor/autoload.php')) {
-    require_once ROOTPATH . '/../vendor/autoload.php';
+if (file_exists(ROOTPATH . 'vendor/autoload.php')) {
+    require_once ROOTPATH . 'vendor/autoload.php';
 }
 
 // Autoload framework

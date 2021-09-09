@@ -43,17 +43,18 @@ Class Azurin
 		}
 		
 		// Get request URI
-		$scheme = isset($_SERVER['REQUEST_SCHEME']) ?: 'http';
-		$uri = $scheme . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-		$uri = str_replace(rtrim(URL, '/'), '', $uri);
-		$uri = ltrim($uri, '/');
+		$scheme	= isset($_SERVER['REQUEST_SCHEME']) ?: 'http';
+		$scheme	= $scheme == 1 ? 'http' : $scheme;
+		$uri	= $scheme . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		$uri	= str_replace(rtrim(URL, '/'), '', $uri);
+		$uri	= ltrim($uri, '/');
 		
 		// Parse request URI
 		if (isset($uri)) {
 			$request = $uri;
 			$request = filter_var($request, FILTER_SANITIZE_URL);
 			$request = explode('/', $request);
-			
+
 			return $request;
 		}
 	}
@@ -64,7 +65,7 @@ Class Azurin
 		// Check controller
 		if (! empty($request[0])) {
 			// controller exist
-			if (file_exists(SRCPATH.'Controllers/' . $request[0] . '.php')) {
+			if (file_exists(SRCPATH . 'Controllers/' . $request[0] . '.php')) {
 				$this->controller = $request[0];
 				unset($request[0]);
 			} else {

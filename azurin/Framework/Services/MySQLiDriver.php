@@ -81,19 +81,19 @@ class MySQLiDriver
     }
 
     // Get all result
-    public function result()
+    public function fetchAll()
     {
         if($this->prepared) {
-            $result = $this->statement->get_result()->fetch_all();
+            $result = $this->statement->get_result()->fetch_all(MYSQLI_ASSOC);
         } else {
-            $result = $this->statement->fetch_all();
+            $result = $this->statement->fetch_all(MYSQLI_ASSOC);
         }
 
         return $result;
     }
 
     // Get associative array
-    public function resultAssoc()
+    public function fetchAssoc()
     {
         if($this->prepared) {
             $result = $this->statement->get_result()->fetch_assoc();
@@ -105,7 +105,7 @@ class MySQLiDriver
     }
 
     // Get result array
-    public function resultArray()
+    public function fetchArray()
     {
         if($this->prepared) {
             $result = $this->statement->get_result()->fetch_array();
@@ -117,12 +117,24 @@ class MySQLiDriver
     }
 
     // Get result row
-    public function resultRow()
+    public function fetchRow()
     {
         if($this->prepared) {
             $result = $this->statement->get_result()->fetch_row();
         } else {
             $result = $this->statement->fetch_row();
+        }
+
+        return $result;
+    }
+
+    // Get result object
+    public function fetchObject()
+    {
+        if($this->prepared) {
+            $result = $this->statement->get_result()->fetch_object();
+        } else {
+            $result = $this->statement->fetch_object();
         }
 
         return $result;

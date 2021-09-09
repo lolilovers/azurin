@@ -63,7 +63,7 @@ class Model
             $select = $this->mysqli();
             $select->query($query->sql());
             
-            return $select->result();
+            return $select->fetchAll();
         } else {
             // Find where matching value of key
             $query = $this->builder()
@@ -74,7 +74,7 @@ class Model
             $select = $this->mysqli();
             $select->query($query->sql(), $query->params());
             
-            return $select->result();
+            return $select->fetchAll();
         }
     }
 
@@ -120,7 +120,7 @@ class Model
         $result = $this->mysqli();
         $result->query($query->sql());
 
-        return $result->resultAssoc();
+        return $result->fetchAssoc();
     }
 
     // SUM
@@ -133,7 +133,7 @@ class Model
         $result = $this->mysqli();
         $result->query($query->sql());
 
-        return $result->resultAssoc();
+        return $result->fetchAssoc();
     }
 
     // AVG
@@ -146,7 +146,7 @@ class Model
         $result = $this->mysqli();
         $result->query($query->sql());
 
-        return $result->resultAssoc();
+        return $result->fetchAssoc();
     }
 
     // MIN
@@ -159,7 +159,7 @@ class Model
         $result = $this->mysqli();
         $result->query($query->sql());
 
-        return $result->resultAssoc();
+        return $result->fetchAssoc();
     }
 
     // MAX
@@ -172,6 +172,6 @@ class Model
         $result = $this->mysqli();
         $result->query($query->sql());
 
-        return $result->resultAssoc();
+        return $result->fetchAssoc();
     }
 }
