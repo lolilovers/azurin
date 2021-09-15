@@ -5,6 +5,13 @@
 // Define root project directory
 define('ROOTPATH', __DIR__.'/..//');
 
-// Load app and send result to browser
+// Bootstrap the app
 $app = require_once ROOTPATH . 'azurin/Framework/initialize.php';
+
+// Hot Reloader (development mode)
+if (HR_ENABLE && DEV_MODE) {
+    new Azurin\Framework\HotReload\Reloader\HotReloader(HR_WATCHER);
+}
+
+// Send output to browser
 echo $app;

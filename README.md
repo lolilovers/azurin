@@ -14,7 +14,6 @@ Simple PHP Framework
 - Deprecation mysqli wrapper, now use mysqli driver service
 - Deprecation autoload, now use spl autoload register
 - Sources (view,model,etc...) now moved to separated folder
-- Deprecation cache helper, now use cache service
 - Router feature removed, now use magic routing
 - Changed from MVVM pattern to MVC pattern
 

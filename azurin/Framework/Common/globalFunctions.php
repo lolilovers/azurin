@@ -15,7 +15,24 @@ if (! function_exists('redirect'))
     }
 }
 
-// HTML special chars
+// Redirect to previous page
+if (! function_exists('redirectBack'))
+{
+    function redirectBack()
+    {
+        if (isset($_SERVER['HTTP_REFERER'])) {
+            // Using HTTP referer
+            return header('Location: ' . $_SERVER['HTTP_REFERER']);
+            
+            exit();
+        } else {
+            // Using history
+            echo '<script>window.history.back()</script>';
+        }
+    }
+}
+
+// Escape using HTML special chars
 if (! function_exists('h'))
 {
     function h($string = null)
@@ -31,13 +48,44 @@ if (! function_exists('h'))
 // View loader
 if (! function_exists('view'))
 {
-    function view($file, $data = [])
+    function view($file, $data = [], $viewEngine = TED_ENABLE)
     {
+        // Setup
         $viewPath   = SRCPATH . 'Views/';
-        $native     = new Azurin\Framework\Services\NativeRenderer($viewPath);
-        $view       = $native->render($file, $data);
+        $cachePath  = SRCPATH . 'Storage/cache/';
+        // Renderer
+        if (! $viewEngine) {
+            // Native Renderer
+            $native     = new Azurin\Framework\Services\NativeRenderer($viewPath);
+            $view       = $native->render($file, $data);
+        } else {
+            // Template Engine
+            $templateEngineLoader   = new Azurin\Framework\TemplateEngine\Loader\FilesystemLoader($viewPath);
+            $template               = new Azurin\Framework\TemplateEngine\TemplateEngine([
+                "loader"            => $templateEngineLoader,
+                "partials_loader"   => $templateEngineLoader
+            ]);
+            $view   = $template->render($file, $data);
+        }
+        // Save rendered view
+        $cacheFactory   = new Azurin\Framework\Services\Cache($cachePath);
+        $cacheFactory->create($file, $view);
 
         return $view;
+    }
+}
+
+// Cache loader
+if (! function_exists('cache'))
+{
+    function cache($cache, $expire = CACHE_DEFAULT_EXPIRE)
+    {
+        // Cache path
+        $cachePath      = SRCPATH . 'Storage/cache/';
+        // Load cache
+        $cacheLoader    = new Azurin\Framework\Services\Cache($cachePath);
+
+        return $cacheLoader->load($cache, $expire);
     }
 }
 

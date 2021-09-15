@@ -10,25 +10,19 @@ class Middleware
     protected $request;
 
     // Before accessing controller
-    public function before($req = [])
+    public function before($before = [])
     {
         // Do something here
-        $this->request  = $req;
-        $controller     = isset($req[0]) ? $req[0] : DEFAULT_CONTROLLER;
-        $method         = isset($req[1]) ? $req[1] : DEFAULT_METHOD;
-        if ($method == 'view' || $method == 'cache' || $method == 'model'){
-            
-            return send_403();
-        }
+        $this->request  = $before;
 
         return $this->request;
     }
 
     // After accessing controller
-    public function after($res)
+    public function after($after)
     {
         // Do something here
-        $this->response = $res;
+        $this->response = $after;
 
         return $this->response;
     }
