@@ -24,7 +24,7 @@ use function Azurin\Framework\Database\param;
 use function Azurin\Framework\Database\func;
 use function Azurin\Framework\Database\on;
 
-class Model 
+Abstract class Model 
 {
     protected $table;
     protected $primaryKey;

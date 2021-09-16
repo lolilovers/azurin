@@ -12,7 +12,7 @@ use Azurin\Framework\Services\Files;
 use Azurin\Framework\Services\Input;
 use Azurin\Framework\CSP\CSPBuilder;
 
-class Controller
+Abstract class Controller
 {
     protected $encryption;
     protected $response;

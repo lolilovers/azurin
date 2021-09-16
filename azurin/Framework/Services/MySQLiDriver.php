@@ -26,6 +26,12 @@ class MySQLiDriver
         );
     }
 
+    // Database auto close connection
+    public function __destruct()
+    {
+        $this->close();
+    }
+
     // Query service
     public function query($query, $value = null)
     {
