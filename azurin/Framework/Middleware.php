@@ -1,7 +1,5 @@
 <?php
 
-// ---- Middleware ----
-
 namespace Azurin\Framework;
 
 class Middleware

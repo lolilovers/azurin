@@ -144,3 +144,21 @@ if (! function_exists('send_500'))
         die();
     }
 }
+
+// Session
+if (! function_exists('session'))
+{
+	function session()
+	{
+		return new Azurin\Framework\Services\Session();
+	}
+}
+
+// Cookie
+if (! function_exists('cookie'))
+{
+	function cookie()
+	{
+		return new Azurin\Framework\Services\Cookie($options = []);
+	}
+}

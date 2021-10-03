@@ -1,7 +1,5 @@
 <?php
 
-// ---- Bootstrapper ----
-
 // Define src path
 define('SRCPATH', ROOTPATH . 'azurin/');
 

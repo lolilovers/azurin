@@ -1,7 +1,7 @@
 <?php
 
 // Parse the .env file and send to the $_ENV variable
-$dotEnv = new Azurin\Framework\DotEnv\Loader(SRCPATH . '.env');
+$dotEnv = new Azurin\Framework\DotEnv\Loader(ROOTPATH . '.env');
 $dotEnv->parse();
 $dotEnv->toEnv();
 

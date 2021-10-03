@@ -1,7 +1,5 @@
 <?php
 
-// ---- Azurin Core ----
-
 namespace Azurin\Framework;
 
 use Azurin\Framework\Middleware;
