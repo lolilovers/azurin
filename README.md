@@ -7,7 +7,7 @@ Simple PHP Framework
 
 ## Installation
 - Clone this repository
-- Configure the .ENV file (azurin/.env)
+- Configure the .ENV file
 - Point your server to public path
 
 ## Breaking from 1.x
